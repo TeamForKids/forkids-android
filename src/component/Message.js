@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
-
+// including Gifted chat and show list of data from chatbot system.
 const Message = ({ text, my }) => {
   const isMyMessage = my;
 
