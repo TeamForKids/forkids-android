@@ -1,9 +1,9 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { GiftedChat } from "react-native-gifted-chat";
+import logoAvatar from "../assets/logoAvatar.png";
 
-// import logoAvatar from "../assets";
-// import icon from "../../assets";
-export function Chat() {
+import { StyleSheet } from "react-native";
+export function Chatting() {
   const [messages, setMessages] = useState([]);
   useEffect(() => {
     setMessages([
@@ -15,7 +15,7 @@ export function Chat() {
         user: {
           _id: 2,
           name: "Forkids",
-          avatar: "https://placeimg.com/140/140/any",
+          avatar: logoAvatar,
         },
       },
     ]);
@@ -39,4 +39,6 @@ export function Chat() {
   );
 }
 
-export default Chat;
+const style = StyleSheet.create({});
+
+export default Chatting;
