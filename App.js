@@ -1,25 +1,15 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
-import Demo from "./component/Demo";
-import Cat from "./Cat";
-import Chat from "./Chat";
+import Entry from "./src/pages/Entry";
+import Chat from "./src/pages/Chat";
 export default function App() {
-  return (
-    <Chat />
-    // <View style={styles.container}>
-    //   <Test />
-    // </View>
-    // <View style={styles.container}>
-    //   <Text>Open up App.js to start working on your app!</Text>
-    //   <StatusBar style="auto" />
-    // </View>
-  );
+  return <Entry />;
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#ffffff",
     alignItems: "center",
     justifyContent: "center",
   },

@@ -1,6 +1,8 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { GiftedChat } from "react-native-gifted-chat";
-import logoAvatar from "./assets/logoAvatar.png";
+
+// import logoAvatar from "../assets";
+// import icon from "../../assets";
 export function Chat() {
   const [messages, setMessages] = useState([]);
   useEffect(() => {
@@ -13,7 +15,7 @@ export function Chat() {
         user: {
           _id: 2,
           name: "Forkids",
-          avatar: logoAvatar,
+          avatar: "https://placeimg.com/140/140/any",
         },
       },
     ]);
