@@ -1,17 +1,39 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { GiftedChat } from "react-native-gifted-chat";
 import logoAvatar from "../assets/logoAvatar.png";
-
+import ChatType from "./ChatType";
 import { StyleSheet } from "react-native";
+
+/**
+ *
+ * @returns Messages:
+ * props user._id 로 구분 1: myself, 2: Messanger
+ * 
+ *
+ */
 export function Chatting() {
   const [messages, setMessages] = useState([]);
+
   useEffect(() => {
     setMessages([
       {
         _id: 1,
-        text: "포키즈의 챗봇에 오신것을 환영합니다!",
+        text: "아이의 연령대를 선택해주세요.",
         createdAt: new Date(),
-
+        quickReplies: {
+          type: "radio",
+          keepIt: true,
+          values: [
+            {
+              title: "3-5세 영유아",
+              value: "kids",
+            },
+            {
+              title: "6-13세 어린이",
+              value: "elems",
+            },
+          ],
+        },
         user: {
           _id: 2,
           name: "Forkids",
@@ -39,6 +61,9 @@ export function Chatting() {
   );
 }
 
+/**
+ *
+ */
 const style = StyleSheet.create({});
 
 export default Chatting;
