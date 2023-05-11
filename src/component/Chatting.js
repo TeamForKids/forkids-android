@@ -8,7 +8,7 @@ import { StyleSheet } from "react-native";
  *
  * @returns Messages:
  * props user._id 로 구분 1: myself, 2: Messanger
- * 
+ *
  *
  */
 export function Chatting() {
