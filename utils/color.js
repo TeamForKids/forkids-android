@@ -7,6 +7,7 @@ const palette = {
   darkPrimary: "#0C4113",
   darkSub: "#252525",
   darkBase: "#414141",
+  tutoback: "#7bdc87",
 };
 
 export default palette;

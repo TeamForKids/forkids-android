@@ -1,14 +1,17 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { useFonts } from "expo-font";
+
 //👇🏻 Here is Bottom Tab Navigation
 import Nav from "./Nav";
+
+// import Test Screen
 import Chatting from "./component/Chatting";
 import Entry from "./component/Entry";
+import Guide3 from "./component/Guide3";
 
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { View, Text, Pressable, TouchableOpacity } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
-import Guide3 from "./component/Guide3";
 
 const Stack = createNativeStackNavigator();
 
@@ -44,6 +47,7 @@ export default function App() {
     <>
       {/* <Entry /> */}
       <Nav />
+      {/* <Guide3 /> */}
     </>
     // <Guide3 />
   );
