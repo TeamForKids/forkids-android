@@ -21,7 +21,7 @@ export function Chatting() {
     setMessages([
       {
         _id: 2,
-        text: "This is dummy Text.",
+        text: "Dummy text",
         createdAt: new Date(),
 
         user: {
