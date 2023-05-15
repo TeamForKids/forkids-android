@@ -7,7 +7,6 @@ import Nav from "./Nav";
 // import Test Screen
 import Chatting from "./component/Chatting";
 import Entry from "./component/Entry";
-import Guide3 from "./component/Guide3";
 
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { View, Text, Pressable, TouchableOpacity } from "react-native";

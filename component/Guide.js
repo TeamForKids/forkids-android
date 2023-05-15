@@ -4,7 +4,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Swiper from "react-native-swiper";
 import palette from "../utils/color";
 import guidestyles from "../utils/guidestyles";
-const Guide3 = () => {
+
+const Guide = () => {
   return (
     //👇 Here is Guide 1
     <Swiper>
@@ -52,4 +53,4 @@ const Guide3 = () => {
   );
 };
 
-export default Guide3;
+export default Guide;

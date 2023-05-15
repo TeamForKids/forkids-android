@@ -12,6 +12,9 @@ import {
   Pressable,
   Modal,
 } from "react-native";
+
+// import LinearGradient for Image Gradation
+import LinearGradient from "react-native-linear-gradient";
 import { StyleSheet } from "react-native";
 import palette from "../utils/color";
 /**
@@ -27,27 +30,33 @@ const PlaceBlock = ({ image, place, location }) => {
   return (
     <View>
       <Modal transparent={true} visible={isModalVisible}>
-        <View style={styles.modalFrame}>
-          <Text style={styles.modalName}>{place}</Text>
-          <Text style={styles.modalInfo}>{location}</Text>
-          <Pressable
-            onPress={() => setIsModalVisible(!isModalVisible)}
-            style={[styles.button, styles.buttonClose]}
-          >
-            <Text style={styles.modalClose}>닫기</Text>
-          </Pressable>
+        <View style={styles.centerdView}>
+          <View style={styles.modalFrame}>
+            <Text style={styles.modalName}>{place}</Text>
+            <Text style={styles.modalInfo}>{location}</Text>
+            <Pressable
+              onPress={() => setIsModalVisible(!isModalVisible)}
+              style={[styles.button, styles.buttonClose]}
+            >
+              <Text style={styles.modalClose}>닫기</Text>
+            </Pressable>
+          </View>
         </View>
       </Modal>
       <Pressable
         onPress={() => setIsModalVisible(true)}
         style={styles.placeBlockButton}
+        borderRadius={10}
       >
         <ImageBackground
           source={image}
           resizeMode="cover"
+          borderRadius={10}
           style={styles.placeBlockImage}
         >
-          <Text style={styles.placeBlockText}>{place}</Text>
+          <Text padding={10} bottom={10} style={styles.placeBlockText}>
+            {place}
+          </Text>
         </ImageBackground>
       </Pressable>
     </View>
@@ -55,6 +64,13 @@ const PlaceBlock = ({ image, place, location }) => {
 };
 
 const styles = StyleSheet.create({
+  centerdView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22,
+    padding: 20,
+  },
   modalFrame: {
     margin: 10,
     backgroundColor: palette.white,
@@ -94,6 +110,11 @@ const styles = StyleSheet.create({
     color: palette.white,
   },
   placeBlockButton: {
+    margin: 8,
+    borderRadius: 10,
+    alignItems: "flex-start",
+
+    //Insert Shadow
     shadowColor: palette.black,
     shadowOffset: {
       width: 0,
@@ -101,21 +122,19 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 10,
-    elevation: 5,
-    borderRadius: 20,
-    height: 165,
-    width: 165,
+    elevation: 10,
   },
   placeBlockImage: {
+    borderRadius: 20,
     height: 165,
     width: 165,
   },
   placeBlockText: {
     fontStyle: "normal",
-    fontSize: 17,
+    fontSize: 20,
     textAlign: "left",
-    verticalAlign: "bottom",
-    lineHeight: 26,
+    paddingLeft: 10,
+    paddingBottom: 10,
   },
 });
 

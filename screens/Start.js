@@ -16,7 +16,7 @@ import SwiperView from "react-native-swiper-view";
 import { styles } from "../utils/styles";
 import Guide1 from "../component/Guide1";
 import Guide2 from "../component/Guide2";
-import Guide3 from "../component/Guide3";
+import Guide3 from "../component/Guide";
 
 /** 첫 시작화면입니다. Entry와 Tutorials를 포함합니다.*/
 const Start = ({ navigation }) => {

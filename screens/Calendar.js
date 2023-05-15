@@ -15,6 +15,8 @@ import socket from "../utils/socket";
 import CalendarPicker from "react-native-calendar-picker";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+import EventBlock from "../component/EventBlock";
+
 /**
  *
  * @param {} param
@@ -35,7 +37,6 @@ const Calendar = ({ route, navigation }) => {
     <SafeAreaView>
       <View
         style={{
-          flex: 1,
           justifyContent: "center",
           alignItems: "center",
         }}
