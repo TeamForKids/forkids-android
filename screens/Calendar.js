@@ -5,17 +5,16 @@ import {
   Text,
   FlatList,
   Pressable,
+  StyleSheet,
   ScrollView,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import MessageComponent from "../component/MessageComponent";
-import { styles } from "../utils/styles";
-import socket from "../utils/socket";
-
+import { FontFamily, FontSize } from "../utils/globalstyles";
 import CalendarPicker from "react-native-calendar-picker";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import EventBlock from "../component/EventBlock";
+import palette from "../utils/color";
 
 /**
  *
@@ -32,9 +31,30 @@ const Calendar = ({ route, navigation }) => {
       date: "23/05/23",
       url: "dummy",
     },
+    {
+      image: require("../assets/dummy_image_place.jpg"),
+      event: "dummy event",
+      date: "23/05/23",
+      url: "dummy",
+    },
+    {
+      image: require("../assets/dummy_image_place.jpg"),
+      event: "dummy event",
+      date: "23/05/23",
+      url: "dummy",
+    },
+    {
+      image: require("../assets/dummy_image_place.jpg"),
+      event: "dummy event",
+      date: "23/05/23",
+      url: "dummy",
+    },
   ]);
   return (
     <SafeAreaView>
+      <View>
+        <Text style={styles.mainText}>Calendar</Text>
+      </View>
       <View
         style={{
           justifyContent: "center",
@@ -57,5 +77,16 @@ const Calendar = ({ route, navigation }) => {
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  mainText: {
+    fontFamily: "Poppins_bold",
+    fontSize: 30,
+    padding: 30,
+    color: palette.lightPrimary,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+});
 
 export default Calendar;

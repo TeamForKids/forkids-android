@@ -2,15 +2,13 @@ import React from "react";
 import { useState } from "react";
 import { View, TextInput, Text, FlatList, Pressable } from "react-native";
 
-import { AntDesign } from "@expo/vector-icons";
-//👇🏻 app screens
+// import Chatting from "./component/Chatting";
 
-import Messaging from "./screens/Messaging";
+//👇🏻 app screens
+import Chat from "./screens/Chat";
 import Trend from "./screens/Trend";
 import Place from "./screens/Place";
 import Calendar from "./screens/Calendar";
-
-import Chatting from "./component/Chatting";
 
 //👇🏻 React Navigation configurations
 import { NavigationContainer } from "@react-navigation/native";
@@ -21,7 +19,7 @@ import palette from "./utils/color";
 //👇🏻 Import Tabbar Icons assets
 import { Ionicons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { MaterialIcons } from "@expo/vector-icons";
+import { Feather } from "@expo/vector-icons";
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -29,7 +27,7 @@ export default function Nav() {
   return (
     <NavigationContainer>
       <Tab.Navigator
-        initialRouteName="Messaging"
+        initialRouteName="Chat"
         activeColor={palette.lightPrimary}
         inactiveColor={palette.darkBase}
         barStyle={{ backgroundColor: palette.lightBase }}
@@ -40,20 +38,18 @@ export default function Nav() {
           options={{
             tabBarLabel: "Trend",
             tabBarIcon: ({ color }) => (
-              <Ionicons name="rocket" size={24} color={color} />
-              //   <FontAwesomeIcon icon="rocket-launch" color={color} size={20} />
+              <Ionicons name="md-rocket-outline" size={24} color={color} />
             ),
             tabBarColor: palette.darkBase,
           }}
         />
         <Tab.Screen
-          name="Messaging"
-          component={Chatting}
+          name="Chat"
+          component={Chat}
           options={{
             tabBarLabel: "Chat",
             tabBarIcon: ({ color }) => (
-              <Ionicons name="chatbubble" size={24} color={color} />
-              //   <FontAwesomeIcon icon="message-bot" size={20} color={color} />
+              <Ionicons name="chatbubble-outline" size={24} color={color} />
             ),
             tabBarColor: palette.darkBase,
           }}
@@ -64,8 +60,7 @@ export default function Nav() {
           options={{
             tabBarLabel: "Place",
             tabBarIcon: ({ color }) => (
-              <MaterialIcons name="place" size={24} color={color} />
-              //   <FontAwesomeIcon icon="map" size={20} color={color} />
+              <Feather name="map-pin" size={20} color={color} />
             ),
             tabBarColor: palette.darkBase,
           }}
@@ -81,7 +76,6 @@ export default function Nav() {
                 size={24}
                 color={color}
               />
-              //   <FontAwesomeIcon icon="calendar" size={20} color={color} />
             ),
             tabBarColor: palette.darkBase,
           }}

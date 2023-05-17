@@ -14,9 +14,6 @@ import {
 } from "react-native";
 import { StyleSheet } from "react-native";
 import palette from "../utils/color";
-import { FontFamily, FontSize } from "../utils/globalstyles";
-
-import { AntDesign } from "@expo/vector-icons";
 /**
  *
  * @returns image place block
@@ -24,7 +21,7 @@ import { AntDesign } from "@expo/vector-icons";
  * Trend page location block
  *
  */
-const PlaceBlock = ({ image, place, location, runningtime, parking, tel }) => {
+const TrendBlock = ({ image, place, location }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   return (
@@ -34,39 +31,31 @@ const PlaceBlock = ({ image, place, location, runningtime, parking, tel }) => {
           <View style={styles.modalFrame}>
             <Text style={styles.modalName}>{place}</Text>
             <Text style={styles.modalInfo}>{location}</Text>
-            <Text style={styles.modalInfo}>{runningtime}</Text>
-            <Text style={styles.modalInfo}>{parking}</Text>
-            <Text style={styles.modalInfo}>{tel}</Text>
-
-            <Pressable onPress={() => setIsModalVisible(!isModalVisible)}>
-              <Text>
-                <AntDesign
-                  name="close"
-                  size={24}
-                  color={palette.black}
-                  style={{ paddingHorizontal: 10 }}
-                />{" "}
-              </Text>
+            <Pressable
+              onPress={() => setIsModalVisible(!isModalVisible)}
+              style={[styles.button, styles.buttonClose]}
+            >
+              <Text style={styles.modalClose}>닫기</Text>
             </Pressable>
           </View>
         </View>
       </Modal>
       <Pressable
         onPress={() => setIsModalVisible(true)}
-        style={styles.locationBlockButton}
+        style={styles.placeBlockButton}
         borderRadius={10}
       >
         <ImageBackground
           source={image}
           resizeMode="cover"
           borderRadius={10}
-          style={styles.locationBlockImage}
+          style={styles.placeBlockImage}
         >
           {/* <View style={styles.gradient}>
             <View style={styles.black} />
             <View style={styles.transparent} />
           </View> */}
-          <Text style={styles.locationBlockText}>{place}</Text>
+          <Text style={styles.placeBlockText}>{place}</Text>
         </ImageBackground>
       </Pressable>
     </View>
@@ -79,10 +68,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginTop: 22,
-    padding: 10,
+    padding: 20,
   },
   modalFrame: {
-    width: "100%",
     margin: 10,
     backgroundColor: palette.white,
     borderRadius: 20,
@@ -98,16 +86,12 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   modalName: {
-    fontFamily: "Poppins_bold",
-    fontSize: 25,
+    fontSize: 30,
   },
   modalInfo: {
     fontSize: 20,
-    fontFamily: "Poppins_regular",
-    alignItems: "flex-start",
-    color: palette.darkBase,
   },
-  modalCloseText: {
+  modalClose: {
     color: palette.white,
   },
   button: {
@@ -124,7 +108,22 @@ const styles = StyleSheet.create({
   closeText: {
     color: palette.white,
   },
-  locationBlockButton: {
+  // gradient: {
+  //   width: 165,
+  //   height: 165,
+  // },
+  // black: {
+  //   backgroundColor: palette.black,
+  //   width: 165,
+  //   height: 165,
+  //   opacity: 0.2,
+  // },
+  // transparent: {
+  //   backgroundColor: "transparent",
+  //   width: 100,
+  //   height: 0,
+  // },
+  placeBlockButton: {
     margin: 8,
     borderRadius: 10,
     alignItems: "flex-start",
@@ -139,14 +138,14 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
     elevation: 10,
   },
-  locationBlockImage: {
+  placeBlockImage: {
     borderRadius: 20,
     height: 165,
     width: 165,
     justifyContent: "flex-end",
     alignItems: "flex-start",
   },
-  locationBlockText: {
+  placeBlockText: {
     color: palette.white,
     fontStyle: "normal",
     fontSize: 20,
@@ -155,4 +154,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PlaceBlock;
+export default TrendBlock;

@@ -1,43 +1,28 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { GiftedChat, InputToolbar } from "react-native-gifted-chat";
-import logoAvatar from "../src/assets/logoAvatar.png";
-import ChatType from "./ChatType";
-import { StyleSheet } from "react-native";
+import { GiftedChat } from "react-native-gifted-chat";
 
-import Message from "react-native-gifted-chat";
-import { Send } from "react-native-gifted-chat";
-
-/**
- *
- * @returns Messages:
- * props user._id 로 구분 1: myself, 2: Messanger
- *
- *
- */
-export function Chatting() {
+export default function Chatting() {
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
     setMessages([
       {
-        _id: 2,
-        text: "Dummy text",
+        _id: 1,
+        text: "Hello developer",
         createdAt: new Date(),
-
         user: {
-          _id: 1,
-          name: "User",
-          avatar: "default",
+          _id: 2,
+          name: "React Native",
+          avatar: "https://placeimg.com/140/140/any",
         },
       },
     ]);
   }, []);
 
   const onSend = useCallback((messages = []) => {
-    setMessages(
-      (previousMessages) => GiftedChat.append(previousMessages, messages)
-      // throw messages to Backend server
-    ); //Make List previousMessages and messages
+    setMessages((previousMessages) =>
+      GiftedChat.append(previousMessages, messages)
+    );
   }, []);
 
   return (
@@ -50,7 +35,3 @@ export function Chatting() {
     />
   );
 }
-
-const style = StyleSheet.create({});
-
-export default Chatting;

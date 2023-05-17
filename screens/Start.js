@@ -13,7 +13,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import SwiperView from "react-native-swiper-view";
 
 //👇🏻 Import the app styles
-import { styles } from "../utils/styles";
+import { styles } from "../utils/globalstyles";
 import Guide1 from "../component/Guide1";
 import Guide2 from "../component/Guide2";
 import Guide3 from "../component/Guide";

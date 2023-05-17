@@ -1,6 +1,23 @@
 import { StyleSheet } from "react-native";
 import palette from "./color";
 
+/* fonts */
+export const FontFamily = {
+  promptBold: "Prompt_bold",
+  poppinsSemibold: "Poppins_semibold",
+  poppinsBold: "Poppins_bold",
+  poppinsRegular: "Poppins_regular",
+  poppinsExtrabold: "Poppins_extrabold",
+};
+/* font sizes */
+export const FontSize = {
+  size_31xl: 50,
+  size_xl: 20,
+  size_mini: 15,
+  size_8xs: 5,
+  size_sm: 14,
+};
+
 export const styles = StyleSheet.create({
   navigationStyle: {
     paddingBottom: 48,
