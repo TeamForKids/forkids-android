@@ -1,61 +1,111 @@
-import React, { useState, useCallback, useEffect } from "react";
-import { GiftedChat, InputToolbar } from "react-native-gifted-chat";
+import React, { useState, useCallback, useRef } from "react";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  ScrollView,
+  StyleSheet,
+  SafeAreaView,
+} from "react-native";
 
-import { SafeAreaView } from "react-native-safe-area-context";
+// import icon
+import { Ionicons } from "@expo/vector-icons";
 
-import { StyleSheet } from "react-native";
-import { FontFamily } from "../GlobalStyles";
+// import style
 import palette from "../utils/color";
+import { FontFamily, FontSize } from "../utils/globalstyles";
 
-const Chat = ({ route, navigation }) => {
+// import Chat component
+import MessageBubble from "../component/MessageBubble";
+
+const Chat = () => {
   const [messages, setMessages] = useState([]);
+  const [inputText, setInputText] = useState("");
 
-  useEffect(() => {
-    setMessages([
-      {
-        _id: 1,
-        text: "Hello developer",
-        createdAt: new Date(),
-        user: {
-          _id: 2,
-          name: "React Native",
-          avatar: "https://placeimg.com/140/140/any",
-        },
-      },
-    ]);
-  }, []);
+  const sendMessage = () => {
+    if (inputText.trim() === "") return;
 
-  const onSend = useCallback((messages = []) => {
-    setMessages((previousMessages) =>
-      GiftedChat.append(previousMessages, messages)
-    );
-  }, []);
+    // New Message Text form
+    const newMessage = {
+      id: messages.length + 1,
+      user: 1,
+      text: inputText,
+    };
+
+    setMessages([...messages, newMessage]);
+    setInputText("");
+  };
+
+  const renderMessage = () => {
+    return messages.map((message) => (
+      <MessageBubble
+        key={message.id}
+        text={message.text}
+        isSent={message.isSent}
+      />
+    ));
+  };
 
   return (
-    <SafeAreaView style={styles.viewchat}>
-      <GiftedChat
-        messages={messages}
-        onSend={(messages) => onSend(messages)}
-        user={{
-          _id: 1,
+    <SafeAreaView style={{ flex: 1 }}>
+      <View>
+        <Text style={styles.mainText}>Chat</Text>
+      </View>
+      <ScrollView>{renderMessage()}</ScrollView>
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          paddingHorizontal: 8,
+          backgroundColor: palette.white,
+          padding: 10,
         }}
-        renderInputToolbar={this.renderInputToolbar}
-      />
+      >
+        <TextInput
+          style={{
+            flex: 1,
+            height: 40,
+            borderWidth: 1,
+            borderColor: palette.lightBase,
+            marginRight: 8,
+            padding: 8,
+            borderRadius: 10,
+            backgroundColor: palette.lightBase,
+            fontFamily: FontFamily.poppinsRegular,
+            fontSize: 14,
+          }}
+          value={inputText}
+          onChangeText={setInputText}
+          placeholder="This is example of Text"
+        />
+
+        <TouchableOpacity
+          onPress={sendMessage}
+          style={{
+            padding: 10,
+            backgroundColor: palette.lightPrimary,
+            borderRadius: 10,
+          }}
+        >
+          <Ionicons name="paper-plane-outline" size={20} color="white" />
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  viewchat: {
-    flex: 1,
-  },
-  inputToolbar: {
-    marginLeft: 15,
-    marginRight: 15,
-    marginBottom: 10,
-    borderWidth: 0.5,
-    borderColor: palette.darkBase,
-    borderRadius: 25,
+  mainText: {
+    color: palette.lightPrimary,
+    fontFamily: FontFamily.poppinsBold,
+    fontSize: 30,
+    padding: 30,
+    alignItems: "center",
+    justifyContent: "center",
+    borderBottomRightRadius: 10,
+    borderBottomLeftRadius: 10,
+    backgroundColor: palette.lightBase,
   },
 });
 

@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
   },
   mainText: {
     color: palette.lightPrimary,
-    fontFamily: "Poppins_bold",
+    fontFamily: FontFamily.poppinsBold,
     fontSize: 30,
     padding: 30,
     alignItems: "center",

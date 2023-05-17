@@ -80,7 +80,7 @@ const Calendar = ({ route, navigation }) => {
 
 const styles = StyleSheet.create({
   mainText: {
-    fontFamily: "Poppins_bold",
+    fontFamily: FontFamily.poppinsBold,
     fontSize: 30,
     padding: 30,
     color: palette.lightPrimary,
