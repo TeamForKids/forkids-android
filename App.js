@@ -3,14 +3,9 @@ import { useFonts } from "expo-font";
 
 //👇🏻 Here is Bottom Tab Navigation
 import Nav from "./Nav";
-
 // import Test Screen
-import Chatting from "./component/Chatting";
-import Entry from "./component/Entry";
 
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { View, Text, Pressable, TouchableOpacity } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
 
 const Stack = createNativeStackNavigator();
 
@@ -31,23 +26,5 @@ export default function App() {
     }, 8000);
   }, []);
 
-  return (
-    // <>
-    //   <NavigationContainer>
-    //     {hideSplashScreen ? (
-    //       <Stack.Navigator>
-    //         <Nav />
-    //       </Stack.Navigator>
-    //     ) : (
-    //       <Entry />
-    //     )}
-    //   </NavigationContainer>
-    // </>
-    <>
-      {/* <Entry /> */}
-      <Nav />
-      {/* <Guide3 /> */}
-    </>
-    // <Guide3 />
-  );
+  return <Nav />;
 }
