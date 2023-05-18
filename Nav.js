@@ -2,8 +2,6 @@ import React from "react";
 import { useState } from "react";
 import { View, TextInput, Text, FlatList, Pressable } from "react-native";
 
-// import Chatting from "./component/Chatting";
-
 //👇🏻 app screens
 import Chat from "./screens/Chat";
 import Trend from "./screens/Trend";
@@ -13,7 +11,6 @@ import Calendar from "./screens/Calendar";
 //👇🏻 React Navigation configurations
 import { NavigationContainer } from "@react-navigation/native";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
-import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import palette from "./utils/color";
 
 //👇🏻 Import Tabbar Icons assets
@@ -27,10 +24,33 @@ export default function Nav() {
   return (
     <NavigationContainer>
       <Tab.Navigator
+        // screenOptions={({ route }) => ({
+        //   headerShown: false,
+        //   tabBarStyle: {
+        //     height: 90,
+        //     paddingHorizontal: 5,
+        //     paddingTop: 0,
+        //     backgroundColor: "rgba(34,36,40,1)",
+        //     position: "absolute",
+        //     borderTopWidth: 0,
+        //   },
+        // })}
         initialRouteName="Chat"
         activeColor={palette.lightPrimary}
         inactiveColor={palette.darkBase}
-        barStyle={{ backgroundColor: palette.lightBase }}
+        style={{
+          backgroundColor: palette.lightBase,
+          borderTopRightRadius: 15,
+          borderTopLeftRadius: 15,
+          shadowColor: palette.black,
+          shadowOffset: {
+            width: 0,
+            height: 4,
+          },
+          shadowOpacity: 0.25,
+          shadowRadius: 10,
+          elevation: 5,
+        }}
       >
         <Tab.Screen
           name="Trend"

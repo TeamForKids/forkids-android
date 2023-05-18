@@ -14,14 +14,17 @@ import {
 } from "react-native";
 import { StyleSheet } from "react-native";
 import palette from "../utils/color";
+import { AntDesign } from "@expo/vector-icons";
+import { FontFamily } from "../utils/globalstyles";
+
 /**
  *
- * @returns image place block
- * require image URL, place name TEXT, location name TEXT, running time NUM
+ * @returns image name block
+ * require image URL, name name TEXT, location name TEXT, running time NUM
  * Trend page location block
  *
  */
-const TrendBlock = ({ image, place, location }) => {
+const TrendBlock = ({ image, name, location, runningtime, parking, tel }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   return (
@@ -29,13 +32,21 @@ const TrendBlock = ({ image, place, location }) => {
       <Modal transparent={true} visible={isModalVisible}>
         <View style={styles.centerdView}>
           <View style={styles.modalFrame}>
-            <Text style={styles.modalName}>{place}</Text>
+            <Text style={styles.modalName}>{name}</Text>
             <Text style={styles.modalInfo}>{location}</Text>
-            <Pressable
-              onPress={() => setIsModalVisible(!isModalVisible)}
-              style={[styles.button, styles.buttonClose]}
-            >
-              <Text style={styles.modalClose}>닫기</Text>
+            <Text style={styles.modalInfo}>{runningtime}</Text>
+            <Text style={styles.modalInfo}>{parking}</Text>
+            <Text style={styles.modalInfo}>{tel}</Text>
+
+            <Pressable onPress={() => setIsModalVisible(!isModalVisible)}>
+              <Text>
+                <AntDesign
+                  name="close"
+                  size={24}
+                  color={palette.black}
+                  style={{ paddingHorizontal: 10 }}
+                />{" "}
+              </Text>
             </Pressable>
           </View>
         </View>
@@ -55,7 +66,7 @@ const TrendBlock = ({ image, place, location }) => {
             <View style={styles.black} />
             <View style={styles.transparent} />
           </View> */}
-          <Text style={styles.placeBlockText}>{place}</Text>
+          <Text style={styles.nameBlockText}>{name}</Text>
         </ImageBackground>
       </Pressable>
     </View>
@@ -71,6 +82,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   modalFrame: {
+    width: "100%",
     margin: 10,
     backgroundColor: palette.white,
     borderRadius: 20,
@@ -86,26 +98,17 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   modalName: {
-    fontSize: 30,
+    fontFamily: FontFamily.poppinsBold,
+    fontSize: 25,
   },
   modalInfo: {
     fontSize: 20,
+    fontFamily: FontFamily.poppinsRegular,
+    alignItems: "flex-start",
+    color: palette.darkBase,
   },
-  modalClose: {
-    color: palette.white,
-  },
-  button: {
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2,
-  },
-  buttonOpen: {
-    backgroundColor: palette.lightBase,
-  },
-  buttonClose: {
-    backgroundColor: palette.lightPrimary,
-  },
-  closeText: {
+  modalCloseText: {
+    margin: 3,
     color: palette.white,
   },
   // gradient: {
@@ -140,12 +143,12 @@ const styles = StyleSheet.create({
   },
   placeBlockImage: {
     borderRadius: 20,
-    height: 165,
-    width: 165,
+    height: 180,
+    width: 180,
     justifyContent: "flex-end",
     alignItems: "flex-start",
   },
-  placeBlockText: {
+  nameBlockText: {
     color: palette.white,
     fontStyle: "normal",
     fontSize: 20,

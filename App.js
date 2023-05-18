@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useEffect } from "react";
+import { View } from "react-native";
 import { useFonts } from "expo-font";
 
 //👇🏻 Here is Bottom Tab Navigation
@@ -12,6 +13,8 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   //for Hide Secreen
   const [hideSplashScreen, setHideSplashScreen] = useState(false);
+
+  // get font assets
   const [fontsLoaded, error] = useFonts({
     Prompt_bold: require("./assets/fonts/Prompt_bold.ttf"),
     Poppins_regular: require("./assets/fonts/Poppins_regular.ttf"),
@@ -20,11 +23,9 @@ export default function App() {
     Poppins_extrabold: require("./assets/fonts/Poppins_extrabold.ttf"),
   });
 
-  useEffect(() => {
-    setTimeout(() => {
-      setHideSplashScreen(true);
-    }, 8000);
-  }, []);
+  if (!fontsLoaded) {
+    return null;
+  }
 
-  return <Nav />;
+  return <View>{hideSplashScreen ? <Splash /> : <Nav />}</View>;
 }

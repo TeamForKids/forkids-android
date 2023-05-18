@@ -11,6 +11,7 @@ import {
   ImageBackground,
   Pressable,
   Modal,
+  useWindowDimensions,
 } from "react-native";
 import { StyleSheet } from "react-native";
 import palette from "../utils/color";
@@ -19,20 +20,21 @@ import { FontFamily, FontSize } from "../utils/globalstyles";
 import { AntDesign } from "@expo/vector-icons";
 /**
  *
- * @returns image place block
- * require image URL, place name TEXT, location name TEXT, running time NUM
+ * @returns image name block
+ * require image URL, name name TEXT, location name TEXT, running time NUM
  * Trend page location block
  *
  */
-const PlaceBlock = ({ image, place, location, runningtime, parking, tel }) => {
+const PlaceBlock = ({ image, name, location, runningtime, parking, tel }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const windowWidth = useWindowDimensions().width;
 
   return (
     <View>
       <Modal transparent={true} visible={isModalVisible}>
         <View style={styles.centerdView}>
           <View style={styles.modalFrame}>
-            <Text style={styles.modalName}>{place}</Text>
+            <Text style={styles.modalName}>{name}</Text>
             <Text style={styles.modalInfo}>{location}</Text>
             <Text style={styles.modalInfo}>{runningtime}</Text>
             <Text style={styles.modalInfo}>{parking}</Text>
@@ -53,21 +55,16 @@ const PlaceBlock = ({ image, place, location, runningtime, parking, tel }) => {
       </Modal>
       <Pressable
         onPress={() => setIsModalVisible(true)}
-        style={styles.locationBlockButton}
+        style={[styles.placeBlockButton, { width: windowWidth }]}
         borderRadius={10}
       >
-        <ImageBackground
-          source={image}
-          resizeMode="cover"
-          borderRadius={10}
-          style={styles.locationBlockImage}
-        >
-          {/* <View style={styles.gradient}>
-            <View style={styles.black} />
-            <View style={styles.transparent} />
-          </View> */}
-          <Text style={styles.locationBlockText}>{place}</Text>
-        </ImageBackground>
+        <View style={[styles.placecontainer, { width: windowWidth }]}>
+          <Image style={styles.image} source={image} />
+          <View style={styles.textContainer}>
+            <Text style={styles.name}> {name}</Text>
+            <Text style={styles.location}>{location}</Text>
+          </View>
+        </View>
       </Pressable>
     </View>
   );
@@ -88,6 +85,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 35,
     alignItems: "flex-start",
+
     shadowColor: palette.black,
     shadowOffset: {
       width: 0,
@@ -95,7 +93,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 10,
-    elevation: 5,
+    elevation: 10,
   },
   modalName: {
     fontFamily: "Poppins_bold",
@@ -115,6 +113,35 @@ const styles = StyleSheet.create({
     padding: 10,
     elevation: 2,
   },
+  placecontainer: {
+    backgroundColor: palette.white,
+    padding: 5,
+    borderRadius: 15,
+    flexDirection: "row",
+  },
+  image: {
+    borderRadius: 10,
+    // width: "20%",
+    height: 80,
+    width: 80,
+    margin: 3,
+  },
+  textContainer: {
+    flexDirection: "column",
+    alignItems: "flex-start",
+    alignSelf: "flex-start",
+    margin: 5,
+  },
+  name: {
+    fontSize: 16,
+    alignSelf: "flex-start",
+    fontFamily: FontFamily.poppinsBold,
+  },
+  location: {
+    fontSize: 12,
+    alignSelf: "flex-start",
+    fontFamily: FontFamily.poppinsRegular,
+  },
   buttonOpen: {
     backgroundColor: palette.lightBase,
   },
@@ -124,31 +151,34 @@ const styles = StyleSheet.create({
   closeText: {
     color: palette.white,
   },
-  locationBlockButton: {
-    margin: 8,
+  placeBlockButton: {
+    flex: 1,
+    margin: 3,
+    paddingVertical: 5,
     borderRadius: 10,
     alignItems: "flex-start",
 
     //Insert Shadow
     shadowColor: palette.black,
     shadowOffset: {
-      width: 0,
-      height: 4,
+      width: 1,
+      height: 2,
     },
     shadowOpacity: 0.25,
-    shadowRadius: 10,
+    shadowRadius: 3,
     elevation: 10,
   },
-  locationBlockImage: {
+  placeBlockImage: {
+    margin: 3,
     borderRadius: 20,
-    height: 165,
-    width: 165,
+    height: 80,
+    width: 80,
     justifyContent: "flex-end",
     alignItems: "flex-start",
   },
-  locationBlockText: {
+  placeBlockText: {
     color: palette.white,
-    fontStyle: "normal",
+    FontFamily: FontFamily.poppinsRegular,
     fontSize: 20,
     bottom: 10,
     left: 10,

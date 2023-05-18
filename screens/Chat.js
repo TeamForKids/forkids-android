@@ -1,12 +1,13 @@
-import React, { useState, useCallback, useRef } from "react";
+import React, { useState, useCallback, useRef, useEffect } from "react";
 import {
   View,
   Text,
   TextInput,
-  TouchableOpacity,
+  Pressable,
   ScrollView,
   StyleSheet,
   SafeAreaView,
+  Image,
 } from "react-native";
 
 // import icon
@@ -18,23 +19,59 @@ import { FontFamily, FontSize } from "../utils/globalstyles";
 
 // import Chat component
 import MessageBubble from "../component/MessageBubble";
+import QuickReplyBubble from "../component/QuickReplyBubble";
+
+// import Mongoose for connecting
+import mongoose, { mongo } from "mongoose";
+import axios from "axios";
 
 const Chat = () => {
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState([
+    { id: 1, isSent: false, text: "example Text" },
+  ]);
   const [inputText, setInputText] = useState("");
 
-  const sendMessage = () => {
-    if (inputText.trim() === "") return;
-
-    // New Message Text form
-    const newMessage = {
-      id: messages.length + 1,
-      user: 1,
-      text: inputText,
+  useEffect(() => {
+    // fetch message from back-end
+    const fetchMessages = async () => {
+      try {
+        // const response = await axios.get("/api/messages"); // example api, get from
+        const newMessage = {
+          id: messages.length + 1,
+          isSent: false,
+          text: response.data,
+        };
+        setMessages([...messages, newMessage]);
+      } catch (error) {
+        console.error("Error fetching messages:", error);
+      }
     };
 
-    setMessages([...messages, newMessage]);
-    setInputText("");
+    fetchMessages();
+  }, []);
+
+  const sendMessage = async () => {
+    if (inputText.trim() === "") return; //get text input
+
+    const newMessage = {
+      id: messages.length + 1,
+      isSent: true,
+      text: inputText, // make newMessage
+    };
+
+    setMessages([...messages, newMessage]); //setting
+    // // 수정 필요, 매번 새 배열을 세팅하는 것이 아닌
+    // // 기존 메시지는 두고 newMessage만을 append하도록 설정
+    // setInputText("");
+
+    // try {
+    //   // warn : do not use until api is set
+    //   await axios.post("host api", { newMessage });
+    //   console.log("Message sent:", newMessage);
+    //   setInputValue("");
+    // } catch (error) {
+    //   console.error("Error sending message:", error);
+    // }
   };
 
   const renderMessage = () => {
@@ -47,12 +84,29 @@ const Chat = () => {
     ));
   };
 
+  const [isVisible, setIsVisible] = useState(true);
+
+  const handleQuickReplyPress = (option) => {
+    setMessages([...messages, { text: option, isSent: true }]);
+    setIsVisible(false);
+  };
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View>
         <Text style={styles.mainText}>Chat</Text>
       </View>
-      <ScrollView>{renderMessage()}</ScrollView>
+
+      <ScrollView style={styles.scrollView}>
+        {renderMessage()}
+        {isVisible && (
+          <QuickReplyBubble
+            options={["5-7세 어린이", "8-13세 초등학생"]}
+            onOptionPress={handleQuickReplyPress}
+          />
+        )}
+      </ScrollView>
+
       <View
         style={{
           flexDirection: "row",
@@ -62,25 +116,15 @@ const Chat = () => {
           padding: 10,
         }}
       >
+        {/* Bottom TextInput & SendButton */}
         <TextInput
-          style={{
-            flex: 1,
-            height: 40,
-            borderWidth: 1,
-            borderColor: palette.lightBase,
-            marginRight: 8,
-            padding: 8,
-            borderRadius: 10,
-            backgroundColor: palette.lightBase,
-            fontFamily: FontFamily.poppinsRegular,
-            fontSize: 14,
-          }}
+          style={styles.textInput}
           value={inputText}
           onChangeText={setInputText}
-          placeholder="This is example of Text"
+          placeholder="Enter Text"
         />
 
-        <TouchableOpacity
+        <Pressable
           onPress={sendMessage}
           style={{
             padding: 10,
@@ -88,8 +132,14 @@ const Chat = () => {
             borderRadius: 10,
           }}
         >
-          <Ionicons name="paper-plane-outline" size={20} color="white" />
-        </TouchableOpacity>
+          <Image
+            source={require("../assets/Send.png")}
+            style={{
+              width: 20,
+              height: 20,
+            }}
+          />
+        </Pressable>
       </View>
     </SafeAreaView>
   );
@@ -106,6 +156,25 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 10,
     borderBottomLeftRadius: 10,
     backgroundColor: palette.lightBase,
+  },
+  scrollView: {
+    overflow: "visible",
+    flexGrow: 1,
+    paddingHorizontal: 10,
+    elevation: 10,
+    paddingVertical: 8,
+  },
+  textInput: {
+    flex: 1,
+    height: 40,
+    borderWidth: 1,
+    borderColor: palette.lightBase,
+    marginRight: 8,
+    padding: 8,
+    borderRadius: 10,
+    backgroundColor: palette.lightBase,
+    fontFamily: FontFamily.poppinsRegular,
+    fontSize: 14,
   },
 });
 
