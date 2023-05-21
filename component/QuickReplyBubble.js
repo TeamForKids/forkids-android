@@ -8,20 +8,23 @@ import palette from "../utils/color";
 /**
  *
  * @param {} param0
- * @returns
+ * @returns options : 옵션 리스트
+ * onOptionPress : 옵션을 눌렀을 시의 수행 작업
  */
 const QuickReplyBubble = ({ options, onOptionPress }) => {
   const [isVisible, setIsVisible] = useState(true);
 
   return (
-    <View style={styles.container}>
+    <View style={styles.quickReplyContainer}>
       {options.map((option, index) => (
         <Pressable
-          key={index}
-          style={styles.button}
-          onPress={() => onOptionPress(option)}
+          style={styles.quickReplyButton}
+          onPress={() => {
+            onOptionPress(option);
+            setIsVisible(false);
+          }}
         >
-          <Text style={styles.buttonText}>{option}</Text>
+          <Text style={styles.quickReplyText}>{option}</Text>
         </Pressable>
       ))}
     </View>
@@ -29,17 +32,21 @@ const QuickReplyBubble = ({ options, onOptionPress }) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
+  quickReplyContainer: {
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "flex-start",
     alignItems: "center",
   },
-  button: {
+  quickReplyButton: {
     margin: 5,
     padding: 10,
+
+    //basic form
     backgroundColor: palette.white,
     borderRadius: 15,
+
+    //shadow
     shadowColor: palette.black,
     shadowOffset: {
       width: 0,
@@ -49,7 +56,7 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
     elevation: 5,
   },
-  buttonText: {
+  quickReplyText: {
     fontSize: 16,
     FontFamily: FontFamily.poppinsRegular,
     color: palette.black,

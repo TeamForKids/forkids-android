@@ -4,25 +4,23 @@ import { View, Text, StyleSheet } from "react-native";
 import { FontFamily, FontSize } from "../utils/globalstyles";
 import palette from "../utils/color";
 
-const MessageBubble = ({ text, isSent }) => {
+/**
+ * text :
+ * isSent :
+ * date :
+ */
+const MessageBubble = ({ text, isSent, date }) => {
   const bubbleStyle = isSent ? styles.sentBubble : styles.receivedBubble;
   const textStyle = isSent ? styles.sentText : styles.receivedText;
-
-  const formatTimestamp = () => {
-    // 예시: timestamp를 원하는 형식으로 포맷팅하는 로직 작성
-    const timestamp = new Date();
-    const formattedTimestamp = timestamp.toLocaleTimeString(); // 예시: 시간만 표시
-    return formattedTimestamp;
-  };
-
+  const timeStyle = isSent ? styles.sentTime : styles.receivedTime;
   return (
     <View>
       <View style={[styles.bubble, bubbleStyle]}>
         <Text style={[styles.text, textStyle]}>{text}</Text>
       </View>
-      {/* <View style={styles.container}>
-        <Text style={styles.timestamp}>{formatTimestamp(timestamp)}</Text>
-      </View> */}
+      <View style={[styles.timecontainer, timeStyle]}>
+        <Text style={styles.timestamp}>{date}</Text>
+      </View>
     </View>
   );
 };
@@ -32,6 +30,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     paddingVertical: 8,
     marginVertical: 4,
+    marginHorizontal: 8,
     maxWidth: "70%",
     //Shadow
     shadowColor: palette.black,
@@ -69,13 +68,21 @@ const styles = StyleSheet.create({
   receivedText: {
     color: palette.black,
   },
-  container: {
+  // Time Style
+  timecontainer: {
+    margin: 1,
+  },
+  sentTime: {
     alignSelf: "flex-end",
-    marginTop: 5,
+  },
+  receivedTime: {
+    alignSelf: "flex-start",
   },
   timestamp: {
+    marginHorizontal: 12,
     fontSize: 12,
-    color: "#888",
+    color: palette.darkBase,
+    fontFamily: FontFamily.poppinsRegular,
   },
 });
 

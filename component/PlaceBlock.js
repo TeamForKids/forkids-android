@@ -23,7 +23,7 @@ import { AntDesign } from "@expo/vector-icons";
  * @returns image name block
  * require image URL, name name TEXT, location name TEXT, running time NUM
  * Trend page location block
- *
+ * Which is used in Place Screen
  */
 const PlaceBlock = ({ image, name, location, runningtime, parking, tel }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);

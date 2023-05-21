@@ -1,17 +1,32 @@
 import React from "react";
-import { View, Text, ImageBackground, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  ImageBackground,
+  StyleSheet,
+  ScrollView,
+} from "react-native";
 import palette from "../utils/color";
 
-const PlaceBubble = ({ placeName, imageUrl }) => {
+/**
+ *
+ * place list를 받음
+ *
+ */
+const PlaceBubble = ({ places }) => {
   return (
-    <View style={styles.container}>
-      <ImageBackground
-        source={{ uri: imageUrl }}
-        style={styles.imageBackground}
-      >
-        <Text style={styles.placeName}>{placeName}</Text>
-      </ImageBackground>
-    </View>
+    <ScrollView horizontal={true}>
+      {places.map((place, index) => (
+        <View key={index} style={styles.container}>
+          <ImageBackground
+            source={{ uri: place.imageUrl }}
+            style={styles.imageBackground}
+          >
+            <Text style={styles.places}>{place.name}</Text>
+          </ImageBackground>
+        </View>
+      ))}
+    </ScrollView>
   );
 };
 
@@ -27,7 +42,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  placeName: {
+  places: {
     fontSize: 18,
     fontWeight: "bold",
     color: palette.white,

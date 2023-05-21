@@ -23,9 +23,5 @@ export default function App() {
     Poppins_extrabold: require("./assets/fonts/Poppins_extrabold.ttf"),
   });
 
-  if (!fontsLoaded) {
-    return null;
-  }
-
-  return <View>{hideSplashScreen ? <Splash /> : <Nav />}</View>;
+  return <Nav />;
 }
