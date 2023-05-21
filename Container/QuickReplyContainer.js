@@ -5,29 +5,36 @@ import { View, Text, Pressable, StyleSheet } from "react-native";
 import { FontFamily, FontSize } from "../utils/globalstyles";
 import palette from "../utils/color";
 
+//import component
+import QuickReplyBubble from "../component/QuickReplyBubble";
+
 /**
  *
  * @param {} param0
  * @returns options : 옵션 리스트
- * onPress : 옵션을 눌렀을 시의 수행 작업
+ * onOptionPress : 옵션을 눌렀을 시의 수행 작업 = handleQuickReplyPress
  */
-const QuickReplyBubble = ({ option, onOptionPress }) => {
-  const [isVisible, setIsVisible] = useState(true);
-
+const QuickReplyContainer = ({ options, onOptionPress }) => {
   return (
-    <Pressable
-      style={styles.quickReplyButton}
-      onPress={() => {
-        onOptionPress(option);
-        setIsVisible(false);
-      }}
-    >
-      <Text style={styles.quickReplyText}>{option}</Text>
-    </Pressable>
+    <View style={styles.quickreplycontainer}>
+      {options.map((option, index) => (
+        <QuickReplyBubble
+          option={option}
+          style={styles.quickReplyButton}
+          onOptionPress={onOptionPress}
+        />
+      ))}
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  quickreplycontainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "flex-start",
+    alignItems: "center",
+  },
   quickReplyButton: {
     margin: 5,
     padding: 10,
@@ -53,4 +60,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default QuickReplyBubble;
+export default QuickReplyContainer;

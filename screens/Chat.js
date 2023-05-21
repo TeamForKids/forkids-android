@@ -16,8 +16,10 @@ import { FontFamily, FontSize } from "../utils/globalstyles";
 
 // import Chat component
 import MessageBubble from "../component/MessageBubble";
-import QuickReplyBubble from "../component/QuickReplyBubble";
 import PlaceBubble from "../component/PlaceBubble";
+import RecommendContainer from "../Container/RecommendContainer";
+import QuickReplyContainer from "../Container/QuickReplyContainer";
+import PlaceContainer from "../Container/PlaceContainer";
 
 // import Mongoose for connecting
 import mongoose, { mongo } from "mongoose";
@@ -35,6 +37,48 @@ const Chat = () => {
   ]); // which contain messages array
   const [inputText, setInputText] = useState(""); // which contain user's text input
 
+  const [recommends, setRecommend] = useState([
+    { text: "성수 근처의 놀 곳을 선정해줘!" },
+    { text: "장소 추천받기" },
+    { text: "도움말" },
+  ]);
+
+  const [options, setOptions] = useState([
+    { text: "5-7세 어린이" },
+    { text: "8-13세 초등학생" },
+  ]);
+
+  // for PlaceContainer
+  const [places, setPlaces] = useState([
+    {
+      image: require("../assets/dummy_image_place.png"),
+      name: "점프킹 은평점",
+      location: "위치 : 서울 은평구 불광로 283",
+      runningtime: "운영 시간 : 오전 9시~ 오후 10시",
+      parking: "주차 정보 : XXX",
+      tel: "전화 번호 : 02-XXX-XXXX",
+    },
+    {
+      image: require("../assets/dummy_image_place.png"),
+      name: "점프킹 은평점",
+      location: "위치 : 서울 은평구 불광로 283",
+      runningtime: "운영 시간 : 오전 9시~ 오후 10시",
+      parking: "주차 정보 : XXX",
+      tel: "전화 번호 : 02-XXX-XXXX",
+    },
+    {
+      image: require("../assets/dummy_image_place.png"),
+      name: "점프킹 은평점",
+      location: "위치 : 서울 은평구 불광로 283",
+      runningtime: "운영 시간 : 오전 9시~ 오후 10시",
+      parking: "주차 정보 : XXX",
+      tel: "전화 번호 : 02-XXX-XXXX",
+    },
+  ]);
+
+  /**
+   * @returns call when user enter text Meesage in textInput
+   */
   const sendMessage = () => {
     if (inputText.trim() === "") return;
 
@@ -102,8 +146,16 @@ const Chat = () => {
     setIsVisible(false);
   };
 
+  const handleRecommendPress = (recommend) => {
+    setMessages([
+      ...messages,
+      { text: recommend, isSent: true, date: getCurrentTime() },
+    ]);
+  };
+
+  const handlePlacePress = (place) => {};
+
   /**
-   *
    * @returns 현재 시간을 얻는다.
    */
   const getCurrentTime = () => {
@@ -112,61 +164,71 @@ const Chat = () => {
       now.getMonth() + 1
     }-${now.getDate()} ${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`;
   };
+
+  // View
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View>
         <Text style={styles.mainText}>Chat</Text>
       </View>
 
-      <ScrollView style={styles.scrollView}>
+      <ScrollView style={styles.scrollViewStyle}>
         {renderMessage()}
-        {isVisible && (
-          <QuickReplyBubble
+        {/* {isVisible && (
+          <QuickReplyContainer
             options={["5-7세 어린이", "8-13세 초등학생"]}
             onOptionPress={handleQuickReplyPress}
           />
-        )}
-        {isVisible && (
-          <QuickReplyBubble
-            options={["hi", "hello", "annyeong"]}
-            onOptionPress={handleQuickReplyPress}
-          />
-        )}
+        )} */}
+        <PlaceContainer places={places} onPlacePress={handlePlacePress} />
       </ScrollView>
 
       <View
         style={{
-          flexDirection: "row",
-          alignItems: "center",
-          paddingHorizontal: 8,
-          backgroundColor: palette.white,
-          padding: 10,
+          flexDirection: "column",
+          alignContent: "center",
         }}
       >
-        {/* Bottom TextInput & SendButton */}
-        <TextInput
-          style={styles.textInput}
-          value={inputText}
-          onChangeText={setInputText}
-          placeholder="Enter Text"
+        <RecommendContainer // which recommend comments
+          recommends={recommends}
+          onRecommendPress={handleRecommendPress}
         />
 
-        <Pressable
-          onPress={sendMessage}
+        <View
           style={{
-            padding: 10,
-            backgroundColor: palette.lightPrimary,
-            borderRadius: 10,
+            flexDirection: "row",
+            alignItems: "center",
+            paddingHorizontal: 8,
+            paddingVertical: 10,
+            backgroundColor: palette.white,
           }}
         >
-          <Image
-            source={require("../assets/Send.png")}
-            style={{
-              width: 20,
-              height: 20,
-            }}
+          {/* Bottom TextInput & SendButton */}
+
+          <TextInput
+            style={styles.textInput}
+            value={inputText}
+            onChangeText={setInputText}
+            placeholder="Enter Text"
           />
-        </Pressable>
+
+          <Pressable
+            onPress={sendMessage}
+            style={{
+              padding: 10,
+              backgroundColor: palette.lightPrimary,
+              borderRadius: 10,
+            }}
+          >
+            <Image
+              source={require("../assets/Send.png")}
+              style={{
+                width: 20,
+                height: 20,
+              }}
+            />
+          </Pressable>
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -184,12 +246,9 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 10,
     backgroundColor: palette.lightBase,
   },
-  scrollView: {
-    overflow: "visible",
+  scrollViewStyle: {
+    padding: 8,
     flexGrow: 1,
-    paddingHorizontal: 10,
-    elevation: 10,
-    paddingVertical: 8,
   },
   textInput: {
     flex: 1,

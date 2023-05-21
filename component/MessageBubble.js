@@ -5,9 +5,9 @@ import { FontFamily, FontSize } from "../utils/globalstyles";
 import palette from "../utils/color";
 
 /**
- * text :
- * isSent :
- * date :
+ * text : String
+ * isSent : 보내는 사람 false : true
+ * date : getCurrentDate
  */
 const MessageBubble = ({ text, isSent, date }) => {
   const bubbleStyle = isSent ? styles.sentBubble : styles.receivedBubble;
