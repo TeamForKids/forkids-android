@@ -10,9 +10,6 @@ import {
   Image,
 } from "react-native";
 
-// import icon
-import { Ionicons } from "@expo/vector-icons";
-
 // import style
 import palette from "../utils/color";
 import { FontFamily, FontSize } from "../utils/globalstyles";
@@ -20,77 +17,101 @@ import { FontFamily, FontSize } from "../utils/globalstyles";
 // import Chat component
 import MessageBubble from "../component/MessageBubble";
 import QuickReplyBubble from "../component/QuickReplyBubble";
+import PlaceBubble from "../component/PlaceBubble";
 
 // import Mongoose for connecting
 import mongoose, { mongo } from "mongoose";
 import axios from "axios";
 
 const Chat = () => {
+  //First dummy Text
   const [messages, setMessages] = useState([
-    { id: 1, isSent: false, text: "example Text" },
-  ]);
-  const [inputText, setInputText] = useState("");
+    {
+      user: 1,
+      text: "Base text",
+      isSent: false,
+      date: "", // getCurrentTime 이 형식 미지정으로 렌더링이 불가능함
+    },
+  ]); // which contain messages array
+  const [inputText, setInputText] = useState(""); // which contain user's text input
 
-  useEffect(() => {
-    // fetch message from back-end
-    const fetchMessages = async () => {
-      try {
-        // const response = await axios.get("/api/messages"); // example api, get from
-        const newMessage = {
-          id: messages.length + 1,
-          isSent: false,
-          text: response.data,
-        };
-        setMessages([...messages, newMessage]);
-      } catch (error) {
-        console.error("Error fetching messages:", error);
-      }
-    };
+  const sendMessage = () => {
+    if (inputText.trim() === "") return;
 
-    fetchMessages();
-  }, []);
-
-  const sendMessage = async () => {
-    if (inputText.trim() === "") return; //get text input
-
+    // New Message Text form
     const newMessage = {
-      id: messages.length + 1,
+      // id: messages.length + 1,
+      user: 1,
+      text: inputText,
       isSent: true,
-      text: inputText, // make newMessage
+      date: getCurrentTime(),
     };
 
-    setMessages([...messages, newMessage]); //setting
-    // // 수정 필요, 매번 새 배열을 세팅하는 것이 아닌
-    // // 기존 메시지는 두고 newMessage만을 append하도록 설정
-    // setInputText("");
-
-    // try {
-    //   // warn : do not use until api is set
-    //   await axios.post("host api", { newMessage });
-    //   console.log("Message sent:", newMessage);
-    //   setInputValue("");
-    // } catch (error) {
-    //   console.error("Error sending message:", error);
-    // }
+    setMessages([...messages, newMessage]);
+    setInputText("");
   };
 
+  // useEffect(() => {
+  //   // fetch message from back-end
+  //   const fetchMessages = async () => {
+  //     try {
+  //       // const response = await axios.get("/api/messages"); // example api, get from
+  //       const newMessage = {
+  //         id: messages.length + 1,
+  //         isSent: false,
+  //         text: response.data,
+  //       };
+  //       setMessages([...messages, newMessage]);
+  //     } catch (error) {
+  //       console.error("Error fetching messages:", error);
+  //     }
+  //   };
+
+  //   fetchMessages();
+  // }, []);
+
+  /**
+   *
+   * @returns 메시지 버블을 보여준다.
+   * text: 메시지 텍스트
+   * isSent : 메시지의 수신자 지정 (false : true)
+   */
   const renderMessage = () => {
     return messages.map((message) => (
       <MessageBubble
-        key={message.id}
+        // id={message.id}
         text={message.text}
         isSent={message.isSent}
+        date={message.date}
       />
     ));
   };
 
   const [isVisible, setIsVisible] = useState(true);
 
+  /**
+   * quickReplybubble option을 클릭했을 시의 수행
+   * 1. setMessage에 option텍스트를 추가
+   * 2. setIsVisible(false) 처리하여 bubble을 화면 상에서 지움
+   *  */
   const handleQuickReplyPress = (option) => {
-    setMessages([...messages, { text: option, isSent: true }]);
+    setMessages([
+      ...messages,
+      { text: option, isSent: true, date: getCurrentTime() },
+    ]);
     setIsVisible(false);
   };
 
+  /**
+   *
+   * @returns 현재 시간을 얻는다.
+   */
+  const getCurrentTime = () => {
+    const now = new Date();
+    return `${now.getFullYear()}-${
+      now.getMonth() + 1
+    }-${now.getDate()} ${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`;
+  };
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View>
@@ -102,6 +123,12 @@ const Chat = () => {
         {isVisible && (
           <QuickReplyBubble
             options={["5-7세 어린이", "8-13세 초등학생"]}
+            onOptionPress={handleQuickReplyPress}
+          />
+        )}
+        {isVisible && (
+          <QuickReplyBubble
+            options={["hi", "hello", "annyeong"]}
             onOptionPress={handleQuickReplyPress}
           />
         )}

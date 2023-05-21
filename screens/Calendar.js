@@ -24,6 +24,8 @@ import palette from "../utils/color";
  *
  */
 const Calendar = ({ route, navigation }) => {
+  // dummy Text
+  // setEvent fetch함
   const [events, setEvent] = useState([
     {
       image: require("../assets/dummy_image_place.png"),
@@ -54,7 +56,7 @@ const Calendar = ({ route, navigation }) => {
   const [filteredData, setFilteredData] = useState([]); // 조건에 맞는 정보를 담을 상태
 
   const onDateChange = (date) => {
-    console.log(date); //'2023-05-18T03:00:00.000Z' form
+    console.log(date); // form '2023-05-18T03:00:00.000Z'
     setSelectedDate(date);
   };
 
