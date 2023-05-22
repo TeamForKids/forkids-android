@@ -108,16 +108,8 @@ const Place = ({ route, navigation }) => {
         <View
           style={[styles.placeBlockConatiner, { width: containerWidth * 0.8 }]}
         >
-          {places.map((name, index) => (
-            <PlaceBlock
-              key={index}
-              image={name.image}
-              name={name.name}
-              location={name.location}
-              runningtime={name.runningtime}
-              parking={name.parking}
-              tel={name.tel}
-            />
+          {places.map((place, index) => (
+            <PlaceBlock place={place} />
           ))}
         </View>
       </ScrollView>

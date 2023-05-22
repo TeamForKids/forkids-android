@@ -90,16 +90,8 @@ const Trend = ({ route, navigation }) => {
 
       <ScrollView style={[styles.scrollViewStyle, { width: windowWidth }]}>
         <View style={styles.placeBlockConatiner}>
-          {places.map((name, index) => (
-            <TrendBlock
-              key={index}
-              image={name.image}
-              name={name.name}
-              location={name.location}
-              runningtime={name.runningtime}
-              parking={name.parking}
-              tel={name.tel}
-            />
+          {places.map((place, index) => (
+            <TrendBlock place={place} />
           ))}
         </View>
       </ScrollView>

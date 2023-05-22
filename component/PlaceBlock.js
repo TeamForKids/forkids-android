@@ -14,6 +14,11 @@ import {
   useWindowDimensions,
 } from "react-native";
 import { StyleSheet } from "react-native";
+
+//import modal component
+import PlaceModal from "./PlaceModal";
+
+//import Styles
 import palette from "../utils/color";
 import { FontFamily, FontSize } from "../utils/globalstyles";
 
@@ -25,36 +30,23 @@ import { AntDesign } from "@expo/vector-icons";
  * Trend page location block
  * Which is used in Place Screen
  */
-const PlaceBlock = ({ image, name, location, runningtime, parking, tel }) => {
+const PlaceBlock = ({ place }) => {
+  const { image, name, location, runningtime, parking, tel } = place;
+
   const [isModalVisible, setIsModalVisible] = useState(false);
   const windowWidth = useWindowDimensions().width;
 
+  const handleModalVisible = () => {
+    setIsModalVisible(!isModalVisible);
+  };
+
   return (
     <View>
-      <Modal transparent={true} visible={isModalVisible}>
-        <View style={styles.centerdView}>
-          <View style={styles.modalFrame}>
-            <Text style={styles.modalName}>{name}</Text>
-            <Text style={styles.modalInfo}>{location}</Text>
-            <Text style={styles.modalInfo}>{runningtime}</Text>
-            <Text style={styles.modalInfo}>{parking}</Text>
-            <Text style={styles.modalInfo}>{tel}</Text>
-
-            <Pressable onPress={() => setIsModalVisible(!isModalVisible)}>
-              <Text>
-                <AntDesign
-                  name="close"
-                  size={24}
-                  color={palette.black}
-                  style={{ paddingHorizontal: 10 }}
-                />{" "}
-              </Text>
-            </Pressable>
-          </View>
-        </View>
-      </Modal>
+      {isModalVisible && (
+        <PlaceModal place={place} onModalPress={handleModalVisible} />
+      )}
       <Pressable
-        onPress={() => setIsModalVisible(true)}
+        onPress={handleModalVisible}
         style={[styles.placeBlockButton, { width: windowWidth }]}
         borderRadius={10}
       >
@@ -71,43 +63,6 @@ const PlaceBlock = ({ image, name, location, runningtime, parking, tel }) => {
 };
 
 const styles = StyleSheet.create({
-  centerdView: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 22,
-    padding: 10,
-  },
-  modalFrame: {
-    width: "100%",
-    margin: 10,
-    backgroundColor: palette.white,
-    borderRadius: 20,
-    padding: 35,
-    alignItems: "flex-start",
-
-    shadowColor: palette.black,
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 10,
-    elevation: 10,
-  },
-  modalName: {
-    fontFamily: "Poppins_bold",
-    fontSize: 25,
-  },
-  modalInfo: {
-    fontSize: 20,
-    fontFamily: "Poppins_regular",
-    alignItems: "flex-start",
-    color: palette.darkBase,
-  },
-  modalCloseText: {
-    color: palette.white,
-  },
   button: {
     borderRadius: 20,
     padding: 10,

@@ -7,14 +7,17 @@ import React, {
 import {
   View,
   Text,
-  Image,
   ImageBackground,
   Pressable,
-  Modal,
+  useWindowDimensions,
 } from "react-native";
+
+//import Modal
+import PlaceModal from "./PlaceModal";
+
+//import Style
 import { StyleSheet } from "react-native";
 import palette from "../utils/color";
-import { AntDesign } from "@expo/vector-icons";
 import { FontFamily } from "../utils/globalstyles";
 
 /**
@@ -24,35 +27,21 @@ import { FontFamily } from "../utils/globalstyles";
  * Trend page location block
  *
  */
-const TrendBlock = ({ image, name, location, runningtime, parking, tel }) => {
+const TrendBlock = ({ place }) => {
+  const { image, name, location, runningtime, parking, tel } = place;
   const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const handleModalVisible = () => {
+    setIsModalVisible(!isModalVisible);
+  };
 
   return (
     <View>
-      <Modal transparent={true} visible={isModalVisible}>
-        <View style={styles.centerdView}>
-          <View style={styles.modalFrame}>
-            <Text style={styles.modalName}>{name}</Text>
-            <Text style={styles.modalInfo}>{location}</Text>
-            <Text style={styles.modalInfo}>{runningtime}</Text>
-            <Text style={styles.modalInfo}>{parking}</Text>
-            <Text style={styles.modalInfo}>{tel}</Text>
-
-            <Pressable onPress={() => setIsModalVisible(!isModalVisible)}>
-              <Text>
-                <AntDesign
-                  name="close"
-                  size={24}
-                  color={palette.black}
-                  style={{ paddingHorizontal: 10 }}
-                />{" "}
-              </Text>
-            </Pressable>
-          </View>
-        </View>
-      </Modal>
+      {isModalVisible && (
+        <PlaceModal place={place} onModalPress={handleModalVisible} />
+      )}
       <Pressable
-        onPress={() => setIsModalVisible(true)}
+        onPress={handleModalVisible}
         style={styles.placeBlockButton}
         borderRadius={10}
       >
@@ -74,58 +63,6 @@ const TrendBlock = ({ image, name, location, runningtime, parking, tel }) => {
 };
 
 const styles = StyleSheet.create({
-  centerdView: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 22,
-    padding: 20,
-  },
-  modalFrame: {
-    width: "100%",
-    margin: 10,
-    backgroundColor: palette.white,
-    borderRadius: 20,
-    padding: 35,
-    alignItems: "flex-start",
-    shadowColor: palette.black,
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 10,
-    elevation: 5,
-  },
-  modalName: {
-    fontFamily: FontFamily.poppinsBold,
-    fontSize: 25,
-  },
-  modalInfo: {
-    fontSize: 20,
-    fontFamily: FontFamily.poppinsRegular,
-    alignItems: "flex-start",
-    color: palette.darkBase,
-  },
-  modalCloseText: {
-    margin: 3,
-    color: palette.white,
-  },
-  // gradient: {
-  //   width: 165,
-  //   height: 165,
-  // },
-  // black: {
-  //   backgroundColor: palette.black,
-  //   width: 165,
-  //   height: 165,
-  //   opacity: 0.2,
-  // },
-  // transparent: {
-  //   backgroundColor: "transparent",
-  //   width: 100,
-  //   height: 0,
-  // },
   placeBlockButton: {
     margin: 8,
     borderRadius: 10,
@@ -150,7 +87,7 @@ const styles = StyleSheet.create({
   },
   nameBlockText: {
     color: palette.white,
-    fontStyle: "normal",
+    fontFamily: FontFamily.poppinsSemibold,
     fontSize: 20,
     bottom: 10,
     left: 10,
