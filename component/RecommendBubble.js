@@ -12,7 +12,7 @@ import {
 import palette from "../utils/color";
 import { FontFamily, FontSize } from "../utils/globalstyles";
 
-const RecommendBubble = ({ text, onRecommendPress }) => {
+const RecommendBubble = ({ id, text, onRecommendPress }) => {
   const handlePressIn = () => {};
 
   const handlePressOut = () => {};
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
   },
   text: {
-    fontFamily: FontFamily.poppinsSemibold,
+    fontFamily: "Poppins_semibold",
     fontSize: 14,
     color: palette.lightPrimary,
   },

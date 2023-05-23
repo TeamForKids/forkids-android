@@ -15,6 +15,7 @@ import palette from "../utils/color";
 const Trend = ({ route, navigation }) => {
   const [places, setPlaces] = useState([
     {
+      key: 1,
       image: require("../assets/dummy_image_place.png"),
       name: "Place Name",
       location: "위치 : 서울 은평구 불광로 283",
@@ -23,6 +24,7 @@ const Trend = ({ route, navigation }) => {
       tel: "전화 번호 : 02-XXX-XXXX",
     },
     {
+      key: 2,
       image: require("../assets/dummy_image_place.png"),
       name: "Place Name",
       location: "위치 : 서울 은평구 불광로 283",
@@ -31,6 +33,7 @@ const Trend = ({ route, navigation }) => {
       tel: "전화 번호 : 02-XXX-XXXX",
     },
     {
+      key: 3,
       image: require("../assets/dummy_image_place.png"),
       name: "Place Name",
       location: "위치 : 서울 은평구 불광로 283",
@@ -39,6 +42,7 @@ const Trend = ({ route, navigation }) => {
       tel: "전화 번호 : 02-XXX-XXXX",
     },
     {
+      key: 4,
       image: require("../assets/dummy_image_place.png"),
       name: "Place Name",
       location: "위치 : 서울 은평구 불광로 283",
@@ -47,6 +51,7 @@ const Trend = ({ route, navigation }) => {
       tel: "전화 번호 : 02-XXX-XXXX",
     },
     {
+      key: 5,
       image: require("../assets/dummy_image_place.png"),
       name: "Place Name",
       location: "위치 : 서울 은평구 불광로 283",
@@ -55,6 +60,7 @@ const Trend = ({ route, navigation }) => {
       tel: "전화 번호 : 02-XXX-XXXX",
     },
     {
+      key: 6,
       image: require("../assets/dummy_image_place.png"),
       name: "Place Name",
       location: "위치 : 서울 은평구 불광로 283",
@@ -63,6 +69,7 @@ const Trend = ({ route, navigation }) => {
       tel: "전화 번호 : 02-XXX-XXXX",
     },
     {
+      key: 7,
       image: require("../assets/dummy_image_place.png"),
       name: "Place Name",
       location: "위치 : 서울 은평구 불광로 283",
@@ -71,6 +78,7 @@ const Trend = ({ route, navigation }) => {
       tel: "전화 번호 : 02-XXX-XXXX",
     },
     {
+      key: 8,
       image: require("../assets/dummy_image_place.png"),
       name: "Place Name",
       location: "위치 : 서울 은평구 불광로 283",
@@ -105,7 +113,7 @@ const styles = StyleSheet.create({
   },
   mainText: {
     color: palette.lightPrimary,
-    fontFamily: FontFamily.poppinsBold,
+    fontFamily: "Poppins_bold",
     fontSize: 30,
     padding: 30,
     alignItems: "center",

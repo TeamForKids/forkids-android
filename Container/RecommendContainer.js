@@ -16,9 +16,10 @@ import RecommendBubble from "../component/RecommendBubble";
 
 const RecommendContainer = ({ recommends, onRecommendPress }) => {
   return (
-    <View style={styles.container}>
-      {recommends.map((recommend) => (
+    <View style={styles.recommendcontainer}>
+      {recommends.map((recommend, index) => (
         <RecommendBubble
+          id={index}
           text={recommend.text}
           onRecommendPress={onRecommendPress}
         />
@@ -28,7 +29,7 @@ const RecommendContainer = ({ recommends, onRecommendPress }) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
+  recommendcontainer: {
     flexDirection: "row",
     alignItems: "center",
     paddingHorizontal: 8,

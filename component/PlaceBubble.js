@@ -21,8 +21,8 @@ import PlaceModal from "./PlaceModal";
 
 /**
  *
- * place list를 받음
- *
+ * place prop을 받아 display
+ * modal로 정보를 보낸다.
  */
 const PlaceBubble = ({ place, index }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -38,14 +38,14 @@ const PlaceBubble = ({ place, index }) => {
         <PlaceModal place={place} onModalPress={handleModalVisible} />
       )}
       <Pressable
-        key={index}
-        style={styles.placebutton}
+        id={index}
+        style={styles.placePressable}
         onPress={handleModalVisible}
       >
         <ImageBackground
           resizeMode="cover"
-          source={{ uri: image }}
-          style={styles.imageBackground}
+          source={require("../assets/dummy_image_place.png")}
+          // style={styles.imageBackground}
         >
           <Text style={styles.places}>{name}</Text>
         </ImageBackground>
@@ -55,7 +55,7 @@ const PlaceBubble = ({ place, index }) => {
 };
 
 const styles = StyleSheet.create({
-  placebutton: {
+  placePressable: {
     margin: 8,
     borderRadius: 10,
     alignItems: "flex-start",
@@ -67,6 +67,8 @@ const styles = StyleSheet.create({
 
     padding: 3,
 
+    height: 100,
+    width: 100,
     shadowColor: palette.black,
     shadowOffset: {
       width: 0,
@@ -85,7 +87,7 @@ const styles = StyleSheet.create({
   },
   places: {
     color: palette.black,
-    fontFamily: FontFamily.poppinsSemibold,
+    fontFamily: "Poppins_regular",
     fontSize: 20,
     bottom: 10,
     left: 10,

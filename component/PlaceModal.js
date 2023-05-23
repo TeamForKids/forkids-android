@@ -27,7 +27,6 @@ import { AntDesign } from "@expo/vector-icons";
  */
 const PlaceModal = ({ place, onModalPress }) => {
   const { name, location, runningtime, parking, tel } = place;
-  const windowWidth = useWindowDimensions().width;
 
   return (
     <Modal transparent={true}>
@@ -81,12 +80,12 @@ const styles = StyleSheet.create({
     elevation: 10,
   },
   modalName: {
-    fontFamily: FontFamily.poppinsBold,
+    fontFamily: "Poppins_bold",
     fontSize: 25,
   },
   modalInfo: {
     fontSize: 20,
-    fontFamily: FontFamily.poppinsRegular,
+    fontFamily: "Poppins_regular",
     alignItems: "flex-start",
     color: palette.darkBase,
   },

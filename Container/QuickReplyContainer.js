@@ -19,6 +19,7 @@ const QuickReplyContainer = ({ options, onOptionPress }) => {
     <View style={styles.quickreplycontainer}>
       {options.map((option, index) => (
         <QuickReplyBubble
+          id={index}
           option={option}
           style={styles.quickReplyButton}
           onOptionPress={onOptionPress}

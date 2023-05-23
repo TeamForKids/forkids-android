@@ -16,7 +16,6 @@ import { FontFamily, FontSize } from "../utils/globalstyles";
 
 // import Chat component
 import MessageBubble from "../component/MessageBubble";
-import PlaceBubble from "../component/PlaceBubble";
 import RecommendContainer from "../Container/RecommendContainer";
 import QuickReplyContainer from "../Container/QuickReplyContainer";
 import PlaceContainer from "../Container/PlaceContainer";
@@ -27,25 +26,19 @@ import axios from "axios";
 
 const Chat = () => {
   //First dummy Text
-  const [messages, setMessages] = useState([
-    {
-      user: 1,
-      text: "Base text",
-      isSent: false,
-      date: "", // getCurrentTime 이 형식 미지정으로 렌더링이 불가능함
-    },
-  ]); // which contain messages array
+  const [messages, setMessages] = useState([]); // which contain messages array
+
   const [inputText, setInputText] = useState(""); // which contain user's text input
 
   const [recommends, setRecommend] = useState([
-    { text: "성수 근처의 놀 곳을 선정해줘!" },
-    { text: "장소 추천받기" },
-    { text: "도움말" },
+    { key: 1, text: "성수 근처의 놀 곳을 선정해줘!" },
+    { key: 2, text: "장소 추천받기" },
+    { key: 3, text: "도움말" },
   ]);
 
   const [options, setOptions] = useState([
-    { text: "5-7세 어린이" },
-    { text: "8-13세 초등학생" },
+    { key: 1, text: "5-7세 어린이" },
+    { key: 2, text: "8-13세 초등학생" },
   ]);
 
   // for PlaceContainer
@@ -100,7 +93,7 @@ const Chat = () => {
 
     // New Message Text form
     const newMessage = {
-      // id: messages.length + 1,
+      key: messages.length + 1,
       user: 1,
       text: inputText,
       isSent: true,
@@ -111,24 +104,7 @@ const Chat = () => {
     setInputText("");
   };
 
-  // useEffect(() => {
-  //   // fetch message from back-end
-  //   const fetchMessages = async () => {
-  //     try {
-  //       // const response = await axios.get("/api/messages"); // example api, get from
-  //       const newMessage = {
-  //         id: messages.length + 1,
-  //         isSent: false,
-  //         text: response.data,
-  //       };
-  //       setMessages([...messages, newMessage]);
-  //     } catch (error) {
-  //       console.error("Error fetching messages:", error);
-  //     }
-  //   };
-
-  //   fetchMessages();
-  // }, []);
+  const [isVisible, setIsVisible] = useState(true);
 
   /**
    *
@@ -147,7 +123,18 @@ const Chat = () => {
     ));
   };
 
-  const [isVisible, setIsVisible] = useState(true);
+  useEffect(() => {
+    setMessages([
+      ...messages,
+      {
+        key: messages.length + 1,
+        user: 1,
+        text: "여기 포키즈에서 다양한 질문을 해보세요!",
+        isSent: false,
+        date: getCurrentTime(), // getCurrentTime 이 형식 미지정으로 렌더링이 불가능함
+      },
+    ]);
+  }, []);
 
   /**
    * quickReplybubble option을 클릭했을 시의 수행
@@ -155,13 +142,23 @@ const Chat = () => {
    * 2. setIsVisible(false) 처리하여 bubble을 화면 상에서 지움
    *  */
   const handleQuickReplyPress = (option) => {
-    setMessages([
-      ...messages,
-      { text: option, isSent: true, date: getCurrentTime() },
-    ]);
+    const newMessage = {
+      key: messages.length + 1,
+      user: 1,
+      text: option,
+      isSent: true,
+      date: getCurrentTime(),
+    };
+
+    setMessages([...messages, newMessage]);
+
     setIsVisible(false);
   };
 
+  /**
+   * 추천 텍스트를 클릭했을 시의 수행
+   * 텍스트가 message로 들어가게 된다.
+   */
   const handleRecommendPress = (recommend) => {
     setMessages([
       ...messages,
@@ -170,14 +167,15 @@ const Chat = () => {
   };
 
   const handlePlaceSet = () => {};
+
   /**
    * @returns 현재 시간을 얻는다.
    */
   const getCurrentTime = () => {
     const now = new Date();
-    return `${now.getFullYear()}-${
-      now.getMonth() + 1
-    }-${now.getDate()} ${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`;
+    const hours = now.getHours();
+    const minutes = now.getMinutes();
+    return `${hours}:${minutes}`;
   };
 
   // View
@@ -189,12 +187,12 @@ const Chat = () => {
 
       <ScrollView style={styles.scrollViewStyle}>
         {renderMessage()}
-        {/* {isVisible && (
+        {isVisible && (
           <QuickReplyContainer
-            options={["5-7세 어린이", "8-13세 초등학생"]}
+            options={options}
             onOptionPress={handleQuickReplyPress}
           />
-        )} */}
+        )}
         <PlaceContainer places={places} />
       </ScrollView>
 
@@ -252,7 +250,7 @@ const Chat = () => {
 const styles = StyleSheet.create({
   mainText: {
     color: palette.lightPrimary,
-    fontFamily: FontFamily.poppinsBold,
+    fontFamily: "Poppins_bold",
     fontSize: 30,
     padding: 30,
     alignItems: "center",
@@ -274,7 +272,7 @@ const styles = StyleSheet.create({
     padding: 8,
     borderRadius: 10,
     backgroundColor: palette.lightBase,
-    fontFamily: FontFamily.poppinsRegular,
+    fontFamily: "Poppins_regular",
     fontSize: 14,
   },
 });

@@ -35,6 +35,7 @@ const PlaceBlock = ({ place }) => {
 
   const [isModalVisible, setIsModalVisible] = useState(false);
   const windowWidth = useWindowDimensions().width;
+  const componentWidth = windowWidth * 0.95;
 
   const handleModalVisible = () => {
     setIsModalVisible(!isModalVisible);
@@ -47,10 +48,10 @@ const PlaceBlock = ({ place }) => {
       )}
       <Pressable
         onPress={handleModalVisible}
-        style={[styles.placeBlockButton, { width: windowWidth }]}
+        style={[styles.placeBlockButton, { width: componentWidth }]}
         borderRadius={10}
       >
-        <View style={[styles.placecontainer, { width: windowWidth }]}>
+        <View style={[styles.placecontainer, { width: componentWidth }]}>
           <Image style={styles.image} source={image} />
           <View style={styles.textContainer}>
             <Text style={styles.name}> {name}</Text>
@@ -90,12 +91,12 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 16,
     alignSelf: "flex-start",
-    fontFamily: FontFamily.poppinsBold,
+    fontFamily: "Poppins_bold",
   },
   location: {
     fontSize: 12,
     alignSelf: "flex-start",
-    fontFamily: FontFamily.poppinsRegular,
+    fontFamily: "Poppins_regular",
   },
   buttonOpen: {
     backgroundColor: palette.lightBase,
@@ -108,7 +109,7 @@ const styles = StyleSheet.create({
   },
   placeBlockButton: {
     flex: 1,
-    margin: 3,
+    marginHorizontal: 5,
     paddingVertical: 5,
     borderRadius: 10,
     alignItems: "flex-start",
@@ -133,7 +134,7 @@ const styles = StyleSheet.create({
   },
   placeBlockText: {
     color: palette.white,
-    FontFamily: FontFamily.poppinsRegular,
+    FontFamily: "Poppins_regular",
     fontSize: 20,
     bottom: 10,
     left: 10,

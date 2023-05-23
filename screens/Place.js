@@ -120,7 +120,7 @@ const Place = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   mainText: {
     color: palette.lightPrimary,
-    fontFamily: FontFamily.poppinsBold,
+    fontFamily: "Poppins_bold",
     fontSize: 30,
     padding: 30,
     alignItems: "center",
@@ -134,7 +134,6 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
   placeBlockConatiner: {
-    //2X5 setting
     flexDirection: "column",
   },
 });

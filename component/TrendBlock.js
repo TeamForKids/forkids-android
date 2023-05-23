@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
   },
   nameBlockText: {
     color: palette.white,
-    fontFamily: FontFamily.poppinsSemibold,
+    fontFamily: "Poppins_semibold",
     fontSize: 20,
     bottom: 10,
     left: 10,

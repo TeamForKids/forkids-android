@@ -11,18 +11,18 @@ import palette from "../utils/color";
  * @returns options : 옵션 리스트
  * onPress : 옵션을 눌렀을 시의 수행 작업
  */
-const QuickReplyBubble = ({ option, onOptionPress }) => {
+const QuickReplyBubble = ({ id, option, onOptionPress }) => {
   const [isVisible, setIsVisible] = useState(true);
 
   return (
     <Pressable
       style={styles.quickReplyButton}
       onPress={() => {
-        onOptionPress(option);
+        onOptionPress(option.text);
         setIsVisible(false);
       }}
     >
-      <Text style={styles.quickReplyText}>{option}</Text>
+      <Text style={styles.quickReplyText}>{option.text}</Text>
     </Pressable>
   );
 };
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
   },
   quickReplyText: {
     fontSize: 16,
-    FontFamily: FontFamily.poppinsRegular,
+    FontFamily: "Poppins_regular",
     color: palette.black,
   },
 });

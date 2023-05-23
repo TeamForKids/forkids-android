@@ -111,11 +111,11 @@ const styles = StyleSheet.create({
     backgroundColor: palette.lightBase,
   },
   calendar: {
-    fontFamily: FontFamily.poppinsSemibold,
+    fontFamily: "Poppins_semibold",
   },
   mainText: {
     color: palette.lightPrimary,
-    fontFamily: FontFamily.poppinsBold,
+    fontFamily: "Poppins_bold",
     fontSize: 30,
     padding: 30,
     alignItems: "center",

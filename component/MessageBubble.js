@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 15,
-    fontFamily: FontFamily.poppinsRegular,
+    fontFamily: "Poppins_regular",
   },
   sentText: {
     color: palette.white,
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 12,
     fontSize: 12,
     color: palette.darkBase,
-    fontFamily: FontFamily.poppinsRegular,
+    fontFamily: "Poppins_regular",
   },
 });
 
