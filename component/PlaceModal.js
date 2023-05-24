@@ -1,18 +1,5 @@
-import React, {
-  useEffect,
-  useState,
-  useLayoutEffect,
-  useCallback,
-} from "react";
-import {
-  View,
-  Text,
-  Image,
-  ImageBackground,
-  Pressable,
-  Modal,
-  useWindowDimensions,
-} from "react-native";
+import React from "react";
+import { View, Text, Pressable, Modal } from "react-native";
 import { StyleSheet } from "react-native";
 
 //import Styles
@@ -39,13 +26,8 @@ const PlaceModal = ({ place, onModalPress }) => {
           <Text style={styles.modalInfo}>{tel}</Text>
 
           <Pressable onPress={onModalPress}>
-            <Text>
-              <AntDesign
-                name="close"
-                size={24}
-                color={palette.black}
-                style={{ paddingHorizontal: 10 }}
-              />{" "}
+            <Text style={styles.button}>
+              <AntDesign name="close" size={24} color={palette.black} />{" "}
             </Text>
           </Pressable>
         </View>
@@ -81,10 +63,10 @@ const styles = StyleSheet.create({
   },
   modalName: {
     fontFamily: "Poppins_bold",
-    fontSize: 25,
+    fontSize: 30,
   },
   modalInfo: {
-    fontSize: 20,
+    fontSize: 16,
     fontFamily: "Poppins_regular",
     alignItems: "flex-start",
     color: palette.darkBase,
@@ -93,9 +75,8 @@ const styles = StyleSheet.create({
     color: palette.white,
   },
   button: {
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2,
+    backgroundColor: palette.white,
+    paddingVertical: 10,
   },
 });
 

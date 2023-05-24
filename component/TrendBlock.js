@@ -27,7 +27,7 @@ import { FontFamily } from "../utils/globalstyles";
  * Trend page location block
  *
  */
-const TrendBlock = ({ place }) => {
+const TrendBlock = ({ key, place }) => {
   const { image, name, location, runningtime, parking, tel } = place;
   const [isModalVisible, setIsModalVisible] = useState(false);
 

@@ -24,7 +24,7 @@ import PlaceModal from "./PlaceModal";
  * place prop을 받아 display
  * modal로 정보를 보낸다.
  */
-const PlaceBubble = ({ place, index }) => {
+const PlaceBubble = ({ place, key }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const { image, name, location, runningtime, parking, tel } = place;
 
@@ -37,17 +37,13 @@ const PlaceBubble = ({ place, index }) => {
       {isModalVisible && (
         <PlaceModal place={place} onModalPress={handleModalVisible} />
       )}
-      <Pressable
-        id={index}
-        style={styles.placePressable}
-        onPress={handleModalVisible}
-      >
+      <Pressable style={styles.placePressable} onPress={handleModalVisible}>
         <ImageBackground
           resizeMode="cover"
           source={require("../assets/dummy_image_place.png")}
-          // style={styles.imageBackground}
+          style={styles.imageBackground}
         >
-          <Text style={styles.places}>{name}</Text>
+          <Text style={styles.placesText}>{name}</Text>
         </ImageBackground>
       </Pressable>
     </View>
@@ -56,19 +52,18 @@ const PlaceBubble = ({ place, index }) => {
 
 const styles = StyleSheet.create({
   placePressable: {
-    margin: 8,
-    borderRadius: 10,
-    alignItems: "flex-start",
-
-    backgroundColor: palette.white,
-    borderRadius: 10,
     marginVertical: 5,
     marginHorizontal: 5,
 
-    padding: 3,
+    backgroundColor: palette.white,
+    //for borderRadious setting
+    borderRadius: 10,
+    overflow: "hidden",
 
-    height: 100,
-    width: 100,
+    alignItems: "flex-start",
+    flexWrap: "wrap",
+
+    // shadow
     shadowColor: palette.black,
     shadowOffset: {
       width: 0,
@@ -79,18 +74,18 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   imageBackground: {
-    borderRadius: 20,
-    height: 180,
-    width: 180,
+    height: 140,
+    width: 120,
+    padding: 2,
     justifyContent: "flex-end",
     alignItems: "flex-start",
   },
-  places: {
-    color: palette.black,
+  placesText: {
+    color: palette.white,
     fontFamily: "Poppins_regular",
-    fontSize: 20,
-    bottom: 10,
-    left: 10,
+    fontSize: 16,
+    bottom: 3,
+    left: 3,
   },
 });
 

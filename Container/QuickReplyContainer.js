@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { View, Text, Pressable, StyleSheet } from "react-native";
 
 //import styles
-import { FontFamily, FontSize } from "../utils/globalstyles";
 import palette from "../utils/color";
 
 //import component
@@ -14,14 +13,14 @@ import QuickReplyBubble from "../component/QuickReplyBubble";
  * @returns options : 옵션 리스트
  * onOptionPress : 옵션을 눌렀을 시의 수행 작업 = handleQuickReplyPress
  */
-const QuickReplyContainer = ({ options, onOptionPress }) => {
+const QuickReplyContainer = ({ key, options, onOptionPress }) => {
   return (
     <View style={styles.quickreplycontainer}>
       {options.map((option, index) => (
         <QuickReplyBubble
-          id={index}
+          key={key}
           option={option}
-          style={styles.quickReplyButton}
+          // style={styles.quickReplyButton}
           onOptionPress={onOptionPress}
         />
       ))}
@@ -56,7 +55,7 @@ const styles = StyleSheet.create({
   },
   quickReplyText: {
     fontSize: 16,
-    FontFamily: FontFamily.poppinsRegular,
+    FontFamily: "Poppins_regular",
     color: palette.black,
   },
 });

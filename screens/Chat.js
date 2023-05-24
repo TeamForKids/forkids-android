@@ -6,13 +6,12 @@ import {
   Pressable,
   ScrollView,
   StyleSheet,
-  SafeAreaView,
   Image,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 // import style
 import palette from "../utils/color";
-import { FontFamily, FontSize } from "../utils/globalstyles";
 
 // import Chat component
 import MessageBubble from "../component/MessageBubble";
@@ -21,7 +20,6 @@ import QuickReplyContainer from "../Container/QuickReplyContainer";
 import PlaceContainer from "../Container/PlaceContainer";
 
 // import Mongoose for connecting
-import mongoose, { mongo } from "mongoose";
 import axios from "axios";
 
 const Chat = () => {
@@ -36,10 +34,7 @@ const Chat = () => {
     { key: 3, text: "도움말" },
   ]);
 
-  const [options, setOptions] = useState([
-    { key: 1, text: "5-7세 어린이" },
-    { key: 2, text: "8-13세 초등학생" },
-  ]);
+  const [options, setOptions] = useState([]);
 
   // for PlaceContainer
   const [places, setPlaces] = useState([
@@ -85,6 +80,18 @@ const Chat = () => {
     },
   ]);
 
+  const endpointUrl = "https://api"; //help! dongjae
+
+  const fecthData = async () => {
+    try {
+      const response = await axios.get(endpointUrl);
+      const data = response.data;
+      console.log("Data : ", data);
+    } catch (error) {
+      console.error("Error", error);
+    }
+  };
+
   /**
    * @returns call when user enter text Meesage in textInput
    */
@@ -104,8 +111,6 @@ const Chat = () => {
     setInputText("");
   };
 
-  const [isVisible, setIsVisible] = useState(true);
-
   /**
    *
    * @returns 메시지 버블을 보여준다.
@@ -113,14 +118,24 @@ const Chat = () => {
    * isSent : 메시지의 수신자 지정 (false : true)
    */
   const renderMessage = () => {
-    return messages.map((message) => (
-      <MessageBubble
-        // id={message.id}
-        text={message.text}
-        isSent={message.isSent}
-        date={message.date}
-      />
-    ));
+    return messages.map((message, index) =>
+      message.isQuickReply ? (
+        <QuickReplyContainer
+          key={index}
+          options={message.options}
+          onOptionPress={handleQuickReplyPress}
+        />
+      ) : message.isPlaceImage ? (
+        <PlaceContainer key={index} places={places} />
+      ) : (
+        <MessageBubble
+          // id={message.id}
+          text={message.text}
+          isSent={message.isSent}
+          date={message.date}
+        />
+      )
+    );
   };
 
   useEffect(() => {
@@ -129,9 +144,72 @@ const Chat = () => {
       {
         key: messages.length + 1,
         user: 1,
-        text: "여기 포키즈에서 다양한 질문을 해보세요!",
+        text: "아이의 연령대를 선택해주세요.",
         isSent: false,
-        date: getCurrentTime(), // getCurrentTime 이 형식 미지정으로 렌더링이 불가능함
+        date: getCurrentTime(),
+      },
+      {
+        key: messages.length + 1,
+        user: 1,
+        text: "",
+        isSent: false,
+        date: getCurrentTime(),
+        isQuickReply: true,
+
+        options: [
+          { key: 1, text: "5-7세 어린이" },
+          { key: 2, text: "8-13세 초등학생" },
+        ],
+      },
+      {
+        key: messages.length + 1,
+        user: 1,
+        text: "아이의 연령대를 선택해주세요.",
+        isSent: false,
+        date: getCurrentTime(),
+        isPlaceImage: true,
+        places: [
+          {
+            image: require("../assets/dummy_image_place.png"),
+            name: "Place Name",
+            location: "위치 : 서울 은평구 불광로 283",
+            runningtime: "운영 시간 : 오전 9시~ 오후 10시",
+            parking: "주차 정보 : XXX",
+            tel: "전화 번호 : 02-XXX-XXXX",
+          },
+          {
+            image: require("../assets/dummy_image_place.png"),
+            name: "Place Name",
+            location: "위치 : 서울 은평구 불광로 283",
+            runningtime: "운영 시간 : 오전 9시~ 오후 10시",
+            parking: "주차 정보 : XXX",
+            tel: "전화 번호 : 02-XXX-XXXX",
+          },
+          {
+            image: require("../assets/dummy_image_place.png"),
+            name: "Place Name",
+            location: "위치 : 서울 은평구 불광로 283",
+            runningtime: "운영 시간 : 오전 9시~ 오후 10시",
+            parking: "주차 정보 : XXX",
+            tel: "전화 번호 : 02-XXX-XXXX",
+          },
+          {
+            image: require("../assets/dummy_image_place.png"),
+            name: "Place Name",
+            location: "위치 : 서울 은평구 불광로 283",
+            runningtime: "운영 시간 : 오전 9시~ 오후 10시",
+            parking: "주차 정보 : XXX",
+            tel: "전화 번호 : 02-XXX-XXXX",
+          },
+          {
+            image: require("../assets/dummy_image_place.png"),
+            name: "Place Name",
+            location: "위치 : 서울 은평구 불광로 283",
+            runningtime: "운영 시간 : 오전 9시~ 오후 10시",
+            parking: "주차 정보 : XXX",
+            tel: "전화 번호 : 02-XXX-XXXX",
+          },
+        ],
       },
     ]);
   }, []);
@@ -141,7 +219,7 @@ const Chat = () => {
    * 1. setMessage에 option텍스트를 추가
    * 2. setIsVisible(false) 처리하여 bubble을 화면 상에서 지움
    *  */
-  const handleQuickReplyPress = (option) => {
+  const handleQuickReplyPress = (option, index) => {
     const newMessage = {
       key: messages.length + 1,
       user: 1,
@@ -151,8 +229,6 @@ const Chat = () => {
     };
 
     setMessages([...messages, newMessage]);
-
-    setIsVisible(false);
   };
 
   /**
@@ -165,8 +241,6 @@ const Chat = () => {
       { text: recommend, isSent: true, date: getCurrentTime() },
     ]);
   };
-
-  const handlePlaceSet = () => {};
 
   /**
    * @returns 현재 시간을 얻는다.
@@ -185,16 +259,7 @@ const Chat = () => {
         <Text style={styles.mainText}>Chat</Text>
       </View>
 
-      <ScrollView style={styles.scrollViewStyle}>
-        {renderMessage()}
-        {isVisible && (
-          <QuickReplyContainer
-            options={options}
-            onOptionPress={handleQuickReplyPress}
-          />
-        )}
-        <PlaceContainer places={places} />
-      </ScrollView>
+      <ScrollView style={styles.scrollViewStyle}>{renderMessage()}</ScrollView>
 
       <View
         style={{
@@ -216,8 +281,6 @@ const Chat = () => {
             backgroundColor: palette.white,
           }}
         >
-          {/* Bottom TextInput & SendButton */}
-
           <TextInput
             style={styles.textInput}
             value={inputText}
@@ -260,7 +323,7 @@ const styles = StyleSheet.create({
     backgroundColor: palette.lightBase,
   },
   scrollViewStyle: {
-    padding: 8,
+    padding: 10,
     flexGrow: 1,
   },
   textInput: {

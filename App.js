@@ -34,5 +34,11 @@ export default function App() {
     );
   }
 
-  return <Nav />;
+  return hideSplashScreen ? (
+    <View>
+      <Text>Nothing</Text>
+    </View>
+  ) : (
+    <Nav />
+  );
 }

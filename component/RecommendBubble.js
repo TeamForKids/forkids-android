@@ -12,11 +12,7 @@ import {
 import palette from "../utils/color";
 import { FontFamily, FontSize } from "../utils/globalstyles";
 
-const RecommendBubble = ({ id, text, onRecommendPress }) => {
-  const handlePressIn = () => {};
-
-  const handlePressOut = () => {};
-
+const RecommendBubble = ({ key, text, onRecommendPress }) => {
   return (
     <Pressable
       style={styles.boxcontainer}

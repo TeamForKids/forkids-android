@@ -24,7 +24,7 @@ const PlaceContainer = ({ places }) => {
         contentContainerStyle={[styles.contentContainer]}
       >
         {places.map((place, index) => (
-          <PlaceBubble place={place} index={index} />
+          <PlaceBubble place={place} key={index} />
         ))}
       </ScrollView>
     </View>
@@ -34,6 +34,7 @@ const PlaceContainer = ({ places }) => {
 const styles = StyleSheet.create({
   contentContainer: {
     flexGrow: 1,
+    borderRadius: 10,
   },
 });
 

@@ -48,10 +48,10 @@ const PlaceBlock = ({ place }) => {
       )}
       <Pressable
         onPress={handleModalVisible}
-        style={[styles.placeBlockButton, { width: componentWidth }]}
+        style={[styles.placeBlockPressable, { width: componentWidth }]}
         borderRadius={10}
       >
-        <View style={[styles.placecontainer, { width: componentWidth }]}>
+        <View style={{ flexDirection: "row" }}>
           <Image style={styles.image} source={image} />
           <View style={styles.textContainer}>
             <Text style={styles.name}> {name}</Text>
@@ -64,17 +64,6 @@ const PlaceBlock = ({ place }) => {
 };
 
 const styles = StyleSheet.create({
-  button: {
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2,
-  },
-  placecontainer: {
-    backgroundColor: palette.white,
-    padding: 5,
-    borderRadius: 15,
-    flexDirection: "row",
-  },
   image: {
     borderRadius: 10,
     // width: "20%",
@@ -85,8 +74,8 @@ const styles = StyleSheet.create({
   textContainer: {
     flexDirection: "column",
     alignItems: "flex-start",
-    alignSelf: "flex-start",
     margin: 5,
+    padding: 2,
   },
   name: {
     fontSize: 16,
@@ -98,23 +87,17 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     fontFamily: "Poppins_regular",
   },
-  buttonOpen: {
-    backgroundColor: palette.lightBase,
-  },
-  buttonClose: {
-    backgroundColor: palette.lightPrimary,
-  },
-  closeText: {
-    color: palette.white,
-  },
-  placeBlockButton: {
-    flex: 1,
-    marginHorizontal: 5,
-    paddingVertical: 5,
-    borderRadius: 10,
-    alignItems: "flex-start",
+  placeBlockPressable: {
+    backgroundColor: palette.white,
+    padding: 5,
+    marginVertical: 5,
+    marginHorizontal: 3,
+    overflow: "visible",
+    elevation: 10,
+    borderRadius: 15,
+    flexDirection: "row",
 
-    //Insert Shadow
+    //for shadow
     shadowColor: palette.black,
     shadowOffset: {
       width: 1,
@@ -122,7 +105,6 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 3,
-    elevation: 10,
   },
   placeBlockImage: {
     margin: 3,
@@ -131,13 +113,6 @@ const styles = StyleSheet.create({
     width: 80,
     justifyContent: "flex-end",
     alignItems: "flex-start",
-  },
-  placeBlockText: {
-    color: palette.white,
-    FontFamily: "Poppins_regular",
-    fontSize: 20,
-    bottom: 10,
-    left: 10,
   },
 });
 
