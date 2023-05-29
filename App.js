@@ -35,9 +35,9 @@ export default function App() {
   }
 
   return hideSplashScreen ? (
-    <View>
+    <SafeAreaView>
       <Text>Nothing</Text>
-    </View>
+    </SafeAreaView>
   ) : (
     <Nav />
   );

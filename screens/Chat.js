@@ -80,15 +80,35 @@ const Chat = () => {
     },
   ]);
 
+  /**
+   * This for linking backend need dongjae
+   */
   const endpointUrl = "https://api"; //help! dongjae
 
   const fecthData = async () => {
     try {
-      const response = await axios.get(endpointUrl);
+      const response = await axios.get(endpointUrl); // get
       const data = response.data;
       console.log("Data : ", data);
     } catch (error) {
       console.error("Error", error);
+    }
+  };
+
+  const handleMessageSubmit = async (message) => {
+    const data = {
+      message,
+    };
+
+    try {
+      const response = await axios.post(
+        "https://ed1dd9f6ff24.ngrok.io/api/agent/webhook",
+        data
+      );
+      const fulfillmentText = response.data.queryResult.fulfillmentText;
+      console.log("Data Sended", response.data);
+    } catch (error) {
+      console.log(" Error : ", error);
     }
   };
 
@@ -109,6 +129,7 @@ const Chat = () => {
 
     setMessages([...messages, newMessage]);
     setInputText("");
+    handleMessageSubmit(newMessage);
   };
 
   /**
@@ -149,6 +170,7 @@ const Chat = () => {
         date: getCurrentTime(),
       },
       {
+        //which for quickreply container
         key: messages.length + 1,
         user: 1,
         text: "",
@@ -162,9 +184,10 @@ const Chat = () => {
         ],
       },
       {
+        //which for place container
         key: messages.length + 1,
         user: 1,
-        text: "아이의 연령대를 선택해주세요.",
+        text: "",
         isSent: false,
         date: getCurrentTime(),
         isPlaceImage: true,
