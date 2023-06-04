@@ -18,7 +18,7 @@ const QuickReplyContainer = ({ key, options, onOptionPress }) => {
     <View style={styles.quickreplycontainer}>
       {options.map((option, index) => (
         <QuickReplyBubble
-          key={key}
+          key={index}
           option={option}
           // style={styles.quickReplyButton}
           onOptionPress={onOptionPress}
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   quickReplyButton: {
-    margin: 5,
+    margin: 3,
     padding: 10,
 
     //basic form
