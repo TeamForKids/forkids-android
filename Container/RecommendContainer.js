@@ -19,7 +19,7 @@ const RecommendContainer = ({ recommends, onRecommendPress }) => {
     <View style={styles.recommendcontainer}>
       {recommends.map((recommend, index) => (
         <RecommendBubble
-          key={index}
+          key={recommend.key}
           text={recommend.text}
           onRecommendPress={onRecommendPress}
         />

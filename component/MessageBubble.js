@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
   bubble: {
     paddingHorizontal: 15,
     paddingVertical: 8,
-    marginVertical: 4,
+    marginVertical: 1,
     marginHorizontal: 8,
     maxWidth: "70%",
     //Shadow

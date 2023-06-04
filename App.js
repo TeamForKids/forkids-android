@@ -6,6 +6,7 @@ import * as Font from "expo-font";
 //👇🏻 Here is Bottom Tab Navigation
 import Nav from "./Nav";
 import Splash from "./screens/Splash";
+import Start from "./screens/Start";
 export default function App() {
   //for Hide Secreen
   const [hideSplashScreen, setHideSplashScreen] = useState(false);
@@ -34,11 +35,8 @@ export default function App() {
     );
   }
 
-  return hideSplashScreen ? (
-    <SafeAreaView>
-      <Text>Nothing</Text>
-    </SafeAreaView>
-  ) : (
+  return (
+    // <Start />
     <Nav />
   );
 }

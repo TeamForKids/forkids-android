@@ -25,67 +25,18 @@ import axios from "axios";
 const Chat = () => {
   //First dummy Text
   const [messages, setMessages] = useState([]); // which contain messages array
-
   const [inputText, setInputText] = useState(""); // which contain user's text input
-
   const [recommends, setRecommend] = useState([
     { key: 1, text: "성수 근처의 놀 곳을 선정해줘!" },
     { key: 2, text: "장소 추천받기" },
     { key: 3, text: "도움말" },
-  ]);
-
-  const [options, setOptions] = useState([]);
-
-  // for PlaceContainer
-  const [places, setPlaces] = useState([
-    {
-      image: require("../assets/dummy_image_place.png"),
-      name: "Place Name",
-      location: "위치 : 서울 은평구 불광로 283",
-      runningtime: "운영 시간 : 오전 9시~ 오후 10시",
-      parking: "주차 정보 : XXX",
-      tel: "전화 번호 : 02-XXX-XXXX",
-    },
-    {
-      image: require("../assets/dummy_image_place.png"),
-      name: "Place Name",
-      location: "위치 : 서울 은평구 불광로 283",
-      runningtime: "운영 시간 : 오전 9시~ 오후 10시",
-      parking: "주차 정보 : XXX",
-      tel: "전화 번호 : 02-XXX-XXXX",
-    },
-    {
-      image: require("../assets/dummy_image_place.png"),
-      name: "Place Name",
-      location: "위치 : 서울 은평구 불광로 283",
-      runningtime: "운영 시간 : 오전 9시~ 오후 10시",
-      parking: "주차 정보 : XXX",
-      tel: "전화 번호 : 02-XXX-XXXX",
-    },
-    {
-      image: require("../assets/dummy_image_place.png"),
-      name: "Place Name",
-      location: "위치 : 서울 은평구 불광로 283",
-      runningtime: "운영 시간 : 오전 9시~ 오후 10시",
-      parking: "주차 정보 : XXX",
-      tel: "전화 번호 : 02-XXX-XXXX",
-    },
-    {
-      image: require("../assets/dummy_image_place.png"),
-      name: "Place Name",
-      location: "위치 : 서울 은평구 불광로 283",
-      runningtime: "운영 시간 : 오전 9시~ 오후 10시",
-      parking: "주차 정보 : XXX",
-      tel: "전화 번호 : 02-XXX-XXXX",
-    },
-  ]);
+  ]); //which contain inputText recommend text
+  const scrollViewRef = useRef(null);
 
   /**
-   * This for linking backend need dongjae
+   * 서버에서 답변을 get합니다.
    */
-  const endpointUrl = "https://api"; //help! dongjae
-
-  const fecthData = async () => {
+  const getData = async () => {
     try {
       const response = await axios.get(endpointUrl); // get
       const data = response.data;
@@ -95,7 +46,12 @@ const Chat = () => {
     }
   };
 
-  const handleMessageSubmit = async (message) => {
+  /**
+   *
+   * @param {} message
+   * 메시지를 서버에 post합니다.
+   */
+  const fetchData = async (message) => {
     const data = {
       message,
     };
@@ -129,7 +85,7 @@ const Chat = () => {
 
     setMessages([...messages, newMessage]);
     setInputText("");
-    handleMessageSubmit(newMessage);
+    fetchData(newMessage);
   };
 
   /**
@@ -147,7 +103,7 @@ const Chat = () => {
           onOptionPress={handleQuickReplyPress}
         />
       ) : message.isPlaceImage ? (
-        <PlaceContainer key={index} places={places} />
+        <PlaceContainer key={index} places={message.places} />
       ) : (
         <MessageBubble
           // id={message.id}
@@ -159,9 +115,13 @@ const Chat = () => {
     );
   };
 
+  /**
+   * useEffect 초기 로딩시 텍스트를 업데이트 합니다. setMessges를 통해 기본 폼을 출력합니다.
+   */
   useEffect(() => {
     setMessages([
       ...messages,
+
       {
         key: messages.length + 1,
         user: 1,
@@ -183,6 +143,7 @@ const Chat = () => {
           { key: 2, text: "8-13세 초등학생" },
         ],
       },
+      /**
       {
         //which for place container
         key: messages.length + 1,
@@ -233,7 +194,7 @@ const Chat = () => {
             tel: "전화 번호 : 02-XXX-XXXX",
           },
         ],
-      },
+      },*/
     ]);
   }, []);
 
@@ -242,7 +203,7 @@ const Chat = () => {
    * 1. setMessage에 option텍스트를 추가
    * 2. setIsVisible(false) 처리하여 bubble을 화면 상에서 지움
    *  */
-  const handleQuickReplyPress = (option, index) => {
+  const handleQuickReplyPress = (option) => {
     const newMessage = {
       key: messages.length + 1,
       user: 1,
@@ -250,7 +211,6 @@ const Chat = () => {
       isSent: true,
       date: getCurrentTime(),
     };
-
     setMessages([...messages, newMessage]);
   };
 
@@ -259,10 +219,20 @@ const Chat = () => {
    * 텍스트가 message로 들어가게 된다.
    */
   const handleRecommendPress = (recommend) => {
-    setMessages([
-      ...messages,
-      { text: recommend, isSent: true, date: getCurrentTime() },
-    ]);
+    //sendMessage와 비슷함
+    const newMessage = {
+      key: messages.length + 1,
+      user: 1,
+      text: recommend,
+      isSent: true,
+      date: getCurrentTime(),
+    };
+    setMessages([...messages, newMessage]);
+    fetchData(newMessage);
+  };
+
+  const handleScrollPosChange = () => {
+    scrollViewRef.current.scrollToEnd({ animated: false });
   };
 
   /**
@@ -275,14 +245,24 @@ const Chat = () => {
     return `${hours}:${minutes}`;
   };
 
-  // View
+  /**
+   * Return ; View
+   */
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View>
         <Text style={styles.mainText}>Chat</Text>
       </View>
 
-      <ScrollView style={styles.scrollViewStyle}>{renderMessage()}</ScrollView>
+      <ScrollView
+        ref={scrollViewRef}
+        style={styles.scrollViewStyle}
+        onContentSizeChange={handleScrollPosChange}
+        keyboardDismissMode="on-drag"
+        contentContainerStyle={{ flexGrow: 1 }}
+      >
+        {renderMessage()}
+      </ScrollView>
 
       <View
         style={{
@@ -346,7 +326,7 @@ const styles = StyleSheet.create({
     backgroundColor: palette.lightBase,
   },
   scrollViewStyle: {
-    padding: 10,
+    paddingHorizontal: 10,
     flexGrow: 1,
   },
   textInput: {

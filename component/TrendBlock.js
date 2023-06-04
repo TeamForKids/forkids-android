@@ -4,13 +4,7 @@ import React, {
   useLayoutEffect,
   useCallback,
 } from "react";
-import {
-  View,
-  Text,
-  ImageBackground,
-  Pressable,
-  useWindowDimensions,
-} from "react-native";
+import { View, Text, ImageBackground, Pressable } from "react-native";
 
 //import Modal
 import PlaceModal from "./PlaceModal";

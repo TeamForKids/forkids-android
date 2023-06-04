@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { View, Text, Pressable, StyleSheet } from "react-native";
 
 //import styles
-import { FontFamily, FontSize } from "../utils/globalstyles";
 import palette from "../utils/color";
 
 /**
@@ -16,6 +15,7 @@ const QuickReplyBubble = ({ key, option, onOptionPress }) => {
 
   return (
     <Pressable
+      key={key}
       style={styles.quickReplyPressable}
       onPress={() => {
         onOptionPress(option.text, key);

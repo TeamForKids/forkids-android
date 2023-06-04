@@ -11,6 +11,9 @@
       "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
+    "extra": {
+      "apiurl": "http://localhost:3000/api/"
+    },
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true

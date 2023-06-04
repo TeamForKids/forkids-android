@@ -9,8 +9,8 @@ import {
   ScrollView,
   useWindowDimensions,
 } from "react-native";
+
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { FontFamily, FontSize } from "../utils/globalstyles";
 import CalendarPicker from "react-native-calendar-picker";
 import { SafeAreaView } from "react-native-safe-area-context";
 
