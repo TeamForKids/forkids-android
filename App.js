@@ -1,20 +1,40 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState, useEffect } from "react";
+import { SafeAreaView, Text, useWindowDimensions } from "react-native";
+
+import * as Font from "expo-font";
+
+//👇🏻 Here is Bottom Tab Navigation
+import Nav from "./BottomTab/Nav";
 
 export default function App() {
+  //for Hide Secreen
+
+  const [fontsLoaded, setFontsLoaded] = useState(false);
+  const loadFonts = async () => {
+    await Font.loadAsync({
+      Poppins_regular: require("./assets/fonts/Poppins_regular.ttf"),
+      Poppins_bold: require("./assets/fonts/Poppins_bold.ttf"),
+      Poppins_semibold: require("./assets/fonts/Poppins_semibold.ttf"),
+      Poppins_extrabold: require("./assets/fonts/Poppins_extrabold.ttf"),
+      Prompt_bold: require("./assets/fonts/Prompt_bold.ttf"),
+    });
+    setFontsLoaded(true);
+  };
+
+  useEffect(() => {
+    loadFonts();
+  }, []);
+
+  if (!fontsLoaded) {
+    return (
+      <SafeAreaView style={{ flex: 1 }}>
+        <Text>Waiting...</Text>
+      </SafeAreaView>
+    );
+  }
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    // <Start />
+    <Nav />
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
