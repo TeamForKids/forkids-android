@@ -13,6 +13,7 @@ import PlaceModal from "./PlaceModal";
 import { StyleSheet } from "react-native";
 import palette from "../utils/color";
 
+import axios from "axios";
 /**
  *
  * @returns image name block
@@ -21,17 +22,42 @@ import palette from "../utils/color";
  *
  */
 const TrendBlock = ({ id, place }) => {
-  const { image, name, location, runningtime, parking, tel } = place;
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [info, setinfo] = useState({});
+  const fetchData = async () => {
+    try {
+      const requestbody = {
+        name: place,
+      };
+
+      const response = await axios.get(
+        "http://3.34.136.233:5000/chat/detailPlace",
+        requestbody
+      );
+      console.log(response);
+      if (!response.ok) {
+        throw new Error("Error fetching data");
+      }
+      const info = await response.json();
+      console.log(info);
+      setinfo(info);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 
   const handleModalVisible = () => {
     setIsModalVisible(!isModalVisible);
   };
+  //get data from /path
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <View>
       {isModalVisible && (
-        <PlaceModal place={place} onModalPress={handleModalVisible} />
+        <PlaceModal info={info} onModalPress={handleModalVisible} />
       )}
       <Pressable
         onPress={handleModalVisible}
@@ -39,7 +65,7 @@ const TrendBlock = ({ id, place }) => {
         borderRadius={10}
       >
         <ImageBackground
-          source={image}
+          // source={image}
           resizeMode="cover"
           borderRadius={10}
           style={styles.placeBlockImage}
@@ -60,7 +86,7 @@ const styles = StyleSheet.create({
     margin: 8,
     borderRadius: 10,
     alignItems: "flex-start",
-
+    flexWrap: "wrap",
     //Insert Shadow
     shadowColor: palette.black,
     shadowOffset: {
@@ -81,9 +107,9 @@ const styles = StyleSheet.create({
   nameBlockText: {
     color: palette.white,
     fontFamily: "Poppins_semibold",
-    fontSize: 20,
-    bottom: 10,
-    left: 10,
+    fontSize: 18,
+    marginHorizontal: 20,
+    marginVertical: 10,
   },
 });
 
