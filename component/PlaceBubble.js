@@ -23,10 +23,8 @@ import PlaceModal from "./PlaceModal";
  * place prop을 받아 display
  * modal로 정보를 보낸다.
  */
-const PlaceBubble = ({ place, key }) => {
+const PlaceBubble = ({ place }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const { image, name, location, runningtime, parking, tel } = place;
-
   const handleModalVisible = () => {
     setIsModalVisible(!isModalVisible);
   };
@@ -39,10 +37,10 @@ const PlaceBubble = ({ place, key }) => {
       <Pressable style={styles.placePressable} onPress={handleModalVisible}>
         <ImageBackground
           resizeMode="cover"
-          source={require("../assets/dummy_image_place.png")}
+          source={place.image}
           style={styles.imageBackground}
         >
-          <Text style={styles.placesText}>{name}</Text>
+          <Text style={styles.placesText}>{place.name}</Text>
         </ImageBackground>
       </Pressable>
     </View>

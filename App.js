@@ -5,6 +5,7 @@ import * as Font from "expo-font";
 
 //👇🏻 Here is Bottom Tab Navigation
 import Nav from "./BottomTab/Nav";
+import Start from "./screens/Start";
 
 export default function App() {
   //for Hide Secreen
@@ -33,8 +34,5 @@ export default function App() {
     );
   }
 
-  return (
-    // <Start />
-    <Nav />
-  );
+  return <Nav />;
 }

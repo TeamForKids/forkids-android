@@ -5,7 +5,6 @@ import React, {
   useCallback,
 } from "react";
 import { View, Text, ImageBackground, Pressable } from "react-native";
-
 //import Modal
 import PlaceModal from "./PlaceModal";
 
@@ -24,35 +23,48 @@ import axios from "axios";
 const TrendBlock = ({ id, place }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [info, setinfo] = useState({});
-  const fetchData = async () => {
-    try {
-      const requestbody = {
-        name: place,
-      };
-
-      const response = await axios.get(
-        "http://3.34.136.233:5000/chat/detailPlace",
-        requestbody
-      );
-      console.log(response);
-      if (!response.ok) {
-        throw new Error("Error fetching data");
-      }
-      const info = await response.json();
-      console.log(info);
-      setinfo(info);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
+  // const getData = async () => {
+  //   const requestBody = {
+  //     name: place.name,
+  //   };
+  // axios
+  //   .get("http://3.34.136.233:5000/chat/detailPlace", {
+  //     requestBody,
+  //   })
+  //   .then((response) => {
+  //     const responseData = response.data;
+  //     console.log(responseData);
+  //     // setPlaces(responseData.data);
+  //   })
+  //   .catch((error) => {
+  //     // 에러 처리
+  //     console.error(error);
+  //   });
+  //   const data = { name: "롯데월드 어드벤처\u001c" };
+  //   const jsonString = JSON.stringify(data);
+  //   axios({
+  //     url: "http://3.34.136.233:5000/chat/detailPlace/",
+  //     method: "get",
+  //     params: { name: "롯데월드 어드벤처\u001c" },
+  //   })
+  //     .then((response) => {
+  //       const responseData = response.data;
+  //       console.log(responseData);
+  //       // setPlaces(responseData.data);
+  //     })
+  //     .catch((error) => {
+  //       // 에러 처리
+  //       console.error(error);
+  //     });
+  // };
+  // //get data from /path
+  // useEffect(() => {
+  //   getData();
+  // }, []);
 
   const handleModalVisible = () => {
     setIsModalVisible(!isModalVisible);
   };
-  //get data from /path
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   return (
     <View>
@@ -65,7 +77,7 @@ const TrendBlock = ({ id, place }) => {
         borderRadius={10}
       >
         <ImageBackground
-          // source={image}
+          source={{ uri: place.image }}
           resizeMode="cover"
           borderRadius={10}
           style={styles.placeBlockImage}
@@ -74,7 +86,7 @@ const TrendBlock = ({ id, place }) => {
             <View style={styles.black} />
             <View style={styles.transparent} />
           </View> */}
-          <Text style={styles.nameBlockText}>{place}</Text>
+          <Text style={styles.nameBlockText}>{place.name}</Text>
         </ImageBackground>
       </Pressable>
     </View>
@@ -108,8 +120,8 @@ const styles = StyleSheet.create({
     color: palette.white,
     fontFamily: "Poppins_semibold",
     fontSize: 18,
-    marginHorizontal: 20,
-    marginVertical: 10,
+    marginHorizontal: 10,
+    marginVertical: 8,
   },
 });
 

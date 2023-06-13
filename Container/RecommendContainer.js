@@ -1,24 +1,17 @@
 import React, { useState, Component } from "react";
-import {
-  View,
-  Text,
-  ImageBackground,
-  StyleSheet,
-  ScrollView,
-  Pressable,
-} from "react-native";
+import { View, StyleSheet } from "react-native";
 
 // import Style
 import palette from "../utils/color.js";
 // import component
 import RecommendBubble from "../component/RecommendBubble";
 
-const RecommendContainer = ({ recommends, onRecommendPress }) => {
+const RecommendContainer = ({ key, recommends, onRecommendPress }) => {
   return (
     <View style={styles.recommendcontainer}>
       {recommends.map((recommend, index) => (
         <RecommendBubble
-          key={recommend.key}
+          key={index}
           text={recommend.text}
           onRecommendPress={onRecommendPress}
         />

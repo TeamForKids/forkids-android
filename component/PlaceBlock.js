@@ -20,8 +20,7 @@ import PlaceModal from "./PlaceModal";
 
 //import Styles
 import palette from "../utils/color.js";
-
-import { AntDesign } from "@expo/vector-icons";
+import axios from "axios";
 /**
  *
  * @returns image name block
@@ -30,20 +29,47 @@ import { AntDesign } from "@expo/vector-icons";
  * Which is used in Place Screen
  */
 const PlaceBlock = ({ place }) => {
-  const { image, name, location, runningtime, parking, tel } = place;
-
   const [isModalVisible, setIsModalVisible] = useState(false);
   const windowWidth = useWindowDimensions().width;
   const componentWidth = windowWidth * 0.95;
-
+  const [placeinfo, setPlaces] = useState({});
   const handleModalVisible = () => {
     setIsModalVisible(!isModalVisible);
   };
 
+  // const fetchData = async () => {
+  //   try {
+  //     const response = await fetch("http://3.34.136.233:5000/region/중구"); // Replace with your server URL
+  //     if (!response.ok) {
+  //       throw new Error("Error fetching data");
+  //     }
+  //     const data = await response.json();
+  //     setPlaces(data.data);
+  //   } catch (error) {
+  //     console.error("Error fetching data:", error);
+  //   }
+  // };
+  // //get data from /path
+  // useEffect(() => {
+  //   fetchData();
+  // }, []);
+
+  const requestBody = {
+    name: place.name,
+  };
+
+  axios
+    .get("http://3.34.136.233:5000/chat/detailPlace", { data: requestBody })
+    .then((response) => {
+      console.log(response.data);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
   return (
     <View>
       {isModalVisible && (
-        <PlaceModal place={place} onModalPress={handleModalVisible} />
+        <PlaceModal info={placeinfo} onModalPress={handleModalVisible} />
       )}
       <Pressable
         onPress={handleModalVisible}
@@ -51,10 +77,10 @@ const PlaceBlock = ({ place }) => {
         borderRadius={10}
       >
         <View style={{ flexDirection: "row" }}>
-          <Image style={styles.image} source={image} />
+          <Image style={styles.image} source={{ uri: place.image }} />
           <View style={styles.textContainer}>
-            <Text style={styles.name}> {name}</Text>
-            <Text style={styles.location}>{location}</Text>
+            <Text style={styles.name}> {place.name}</Text>
+            <Text style={styles.location}>{placeinfo.address}</Text>
           </View>
         </View>
       </Pressable>

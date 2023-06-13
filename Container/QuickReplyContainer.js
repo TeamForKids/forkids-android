@@ -13,7 +13,7 @@ import QuickReplyBubble from "../component/QuickReplyBubble";
  * @returns options : 옵션 리스트
  * onOptionPress : 옵션을 눌렀을 시의 수행 작업 = handleQuickReplyPress
  */
-const QuickReplyContainer = ({ key, options, onOptionPress }) => {
+const QuickReplyContainer = ({ options, onOptionPress }) => {
   return (
     <View style={styles.quickreplycontainer}>
       {options.map((option, index) => (
@@ -30,13 +30,14 @@ const QuickReplyContainer = ({ key, options, onOptionPress }) => {
 
 const styles = StyleSheet.create({
   quickreplycontainer: {
+    width: "90%",
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "flex-start",
     alignItems: "center",
   },
   quickReplyButton: {
-    margin: 3,
+    marginHorizontal: 3,
     padding: 10,
 
     //basic form

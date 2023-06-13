@@ -10,15 +10,14 @@ import palette from "../utils/color.js";
  * @returns options : 옵션 리스트
  * onPress : 옵션을 눌렀을 시의 수행 작업
  */
-const QuickReplyBubble = ({ key, option, onOptionPress }) => {
+const QuickReplyBubble = ({ option, onOptionPress }) => {
   const [isVisible, setIsVisible] = useState(true);
 
   return (
     <Pressable
-      key={key}
       style={styles.quickReplyPressable}
       onPress={() => {
-        onOptionPress(option.text, key);
+        onOptionPress(option.text);
         setIsVisible(false);
       }}
     >
@@ -32,10 +31,10 @@ const QuickReplyBubble = ({ key, option, onOptionPress }) => {
 
 const styles = StyleSheet.create({
   quickReplyPressable: {
-    paddingHorizontal: 10,
+    paddingHorizontal: 15,
     paddingVertical: 8,
-    marginVertical: 4,
-    marginHorizontal: 8,
+    marginVertical: 5,
+    marginHorizontal: 6,
 
     //basic form
     backgroundColor: palette.white,

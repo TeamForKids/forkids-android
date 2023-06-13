@@ -4,17 +4,40 @@ import {
   Text,
   ImageBackground,
   StyleSheet,
-  ScrollView,
+  Animated,
   Pressable,
 } from "react-native";
 
 // import Style
 import palette from "../utils/color";
 
-const RecommendBubble = ({ key, text, onRecommendPress }) => {
+const RecommendBubble = ({ text, onRecommendPress }) => {
+  const [backgroundColor] = useState(new Animated.Value(0));
+  const interpolatedColor = backgroundColor.interpolate({
+    inputRange: [0, 1],
+    outputRange: [palette.white, palette.lightBase],
+  });
+
+  const animatedStyle = {
+    backgroundColor: interpolatedColor,
+  };
   return (
     <Pressable
-      style={styles.boxcontainer}
+      // onPressIn={() => {
+      //   Animated.timing(backgroundColor, {
+      //     toValue: 1,
+      //     duration: 200,
+      //     useNativeDriver: false,
+      //   }).start();
+      // }}
+      // onPressOut={() => {
+      //   Animated.timing(backgroundColor, {
+      //     toValue: 0,
+      //     duration: 200,
+      //     useNativeDriver: false,
+      //   }).start();
+      // }}
+      style={[styles.boxcontainer, animatedStyle]}
       onPress={() => {
         onRecommendPress(text);
       }}

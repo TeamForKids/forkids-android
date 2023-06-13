@@ -8,21 +8,21 @@ import { AntDesign } from "@expo/vector-icons";
 
 /**
  *
- * @param {place including{ name, location, runningtime, parking, tel }} param0
+ * @param {info including{ name, address, openingHour, parking, telephone }} param0
  * @returns
  */
-const PlaceModal = ({ place, onModalPress }) => {
-  const { name, location, runningtime, parking, tel } = place;
+const PlaceModal = ({ info, onModalPress }) => {
+  const { name, address, openingHour, telephone } = info;
 
   return (
     <Modal transparent={true}>
       <View style={styles.centerdView}>
         <View style={styles.modalFrame}>
           <Text style={styles.modalName}>{name}</Text>
-          <Text style={styles.modalInfo}>{location}</Text>
-          <Text style={styles.modalInfo}>{runningtime}</Text>
-          <Text style={styles.modalInfo}>{parking}</Text>
-          <Text style={styles.modalInfo}>{tel}</Text>
+          <Text style={styles.modalInfo}>{info.address}</Text>
+          <Text style={styles.modalInfo}>{info.openingHour}</Text>
+          <Text style={styles.modalInfo}>{info.parking}</Text>
+          <Text style={styles.modalInfo}>{info.telephone}</Text>
 
           <Pressable onPress={onModalPress}>
             <Text style={styles.button}>

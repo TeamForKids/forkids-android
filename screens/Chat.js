@@ -10,6 +10,8 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+// import for unique props
+
 // import style
 import palette from "../utils/color.js";
 
@@ -28,12 +30,13 @@ const Chat = () => {
   const [messages, setMessages] = useState([]); // which contain messages array
   const [inputText, setInputText] = useState(""); // which contain user's text input
   const [recommends, setRecommend] = useState([
-    { key: 1, text: "성수 근처의 놀 곳을 선정해줘!" },
-    { key: 2, text: "장소 추천받기" },
-    { key: 3, text: "도움말" },
+    { key: 1, text: "장소 추천받기" },
+    { key: 2, text: "도움말" },
+    { key: 3, text: "채팅 내용 초기화" },
   ]); //which contain inputText recommend text
   const scrollViewRef = useRef(null);
 
+  const [places, setPlaces] = useState([{}, {}, {}]);
   /**
    * 서버에서 답변을 get합니다.
    */
@@ -52,30 +55,31 @@ const Chat = () => {
    * @param {} message
    * 메시지를 서버에 post합니다.
    */
-  const fetchData = async (message) => {
-    try {
-      const response = await axios.post(
-        "https://ed1dd9f6ff24.ngrok.io/api/agent/webhook",
-        {
-          data: message, // 입력 데이터를 요청의 본문에 포함하여 전송
-        }
-      );
-      const fulfillmentText = response.data.queryResult.fulfillmentText;
-      console.log("Data Sended", response.data);
-    } catch (error) {
-      console.log(" Error : ", error);
-    }
-  };
+  // const fetchData = async (message) => {
+  //   try {
+  //     const response = await axios.post(
+  //       "https://ed1dd9f6ff24.ngrok.io/api/agent/webhook",
+  //       {
+  //         data: message, // 입력 데이터를 요청의 본문에 포함하여 전송
+  //       }
+  //     );
+  //     const fulfillmentText = response.data.queryResult.fulfillmentText;
+  //     console.log("Data Sended", response.data);
+  //   } catch (error) {
+  //     console.log(" Error : ", error);
+  //   }
+  // };
 
+  const isMessageAvail = () => {
+    if (inputText.trim() === "") return;
+    sendMessage(inputText);
+  };
   /**
    * @returns call when user enter text Meesage in textInput
    */
-  const sendMessage = () => {
-    if (inputText.trim() === "") return;
-
+  const sendMessage = (inputText) => {
     // New Message Text form
     const newMessage = {
-      key: messages.length + 1,
       user: 1,
       text: inputText,
       isSent: true,
@@ -83,10 +87,28 @@ const Chat = () => {
     };
 
     setMessages([...messages, newMessage]);
+    // renderMessage();
     setInputText("");
-    fetchData(newMessage);
+    chatFlow(newMessage);
+    // fetchData(newMessage);
   };
 
+  /**
+   * quickReplybubble option을 클릭했을 시의 수행
+   * 1. setMessage에 option텍스트를 추가
+   * 2. setIsVisible(false) 처리하여 bubble을 화면 상에서 지움
+   *  */
+  const handleQuickReplyPress = (option) => {
+    sendMessage(option);
+  };
+
+  /**
+   * 추천 텍스트를 클릭했을 시의 수행
+   * 텍스트가 message로 들어가게 된다.
+   */
+  const handleRecommendPress = (recommend) => {
+    sendMessage(recommend);
+  };
   /**
    *
    * @returns 메시지 버블을 보여준다.
@@ -105,7 +127,7 @@ const Chat = () => {
         <PlaceContainer key={index} places={message.places} />
       ) : (
         <MessageBubble
-          // id={message.id}
+          key={index}
           text={message.text}
           isSent={message.isSent}
           date={message.date}
@@ -119,63 +141,152 @@ const Chat = () => {
    */
   useEffect(() => {
     setMessages([
-      ...messages,
-
       {
-        key: messages.length + 1,
+        // key: messages.length + 1,
         user: 1,
-        text: "아이의 연령대를 선택해주세요.",
+        text: "포키즈에 오신것을 환영합니다!",
         isSent: false,
         date: getCurrentTime(),
-      },
-      {
-        //which for quickreply container
-        key: messages.length + 1,
-        user: 1,
-        text: "",
-        isSent: false,
-        date: getCurrentTime(),
-        isQuickReply: true,
-
-        options: [
-          { key: 1, text: "5-7세 어린이" },
-          { key: 2, text: "8-13세 초등학생" },
-        ],
       },
     ]);
+    renderMessage();
   }, []);
 
-  /**
-   * quickReplybubble option을 클릭했을 시의 수행
-   * 1. setMessage에 option텍스트를 추가
-   * 2. setIsVisible(false) 처리하여 bubble을 화면 상에서 지움
-   *  */
-  const handleQuickReplyPress = (option) => {
-    const newMessage = {
-      key: messages.length + 1,
-      user: 1,
-      text: option,
-      isSent: true,
-      date: getCurrentTime(),
-    };
-    setMessages([...messages, newMessage]);
-  };
+  const chatFlow = (inputText) => {
+    if (inputText.text == "도움말") {
+      setMessages([
+        ...messages,
+        inputText,
+        {
+          user: 1,
+          text: `아래의 "장소추천받기" 또는 직접 메시지를 입력해 다양한 시설 정보를 물어보세요! 
+"OO 근처 주차 정보", "OO 근처 카페 정보"를 입력해 시설 근처의 편의도 체크해 보실 수 있어요. `,
+          isSent: false,
+          date: getCurrentTime(),
+        },
+      ]);
+    } else if (inputText.text == "장소 추천받기") {
+      setMessages([
+        ...messages,
+        inputText,
+        {
+          // key: messages.length + 1,
+          user: 1,
+          text: "아이의 연령대를 선택해주세요.",
+          isSent: false,
+          date: getCurrentTime(),
+        },
+        {
+          // key: messages.length + 1,
+          user: 1,
+          text: "",
+          isSent: false,
+          date: getCurrentTime(),
+          isQuickReply: true,
 
-  /**
-   * 추천 텍스트를 클릭했을 시의 수행
-   * 텍스트가 message로 들어가게 된다.
-   */
-  const handleRecommendPress = (recommend) => {
-    //sendMessage와 비슷함
-    const newMessage = {
-      key: messages.length + 1,
-      user: 1,
-      text: recommend,
-      isSent: true,
-      date: getCurrentTime(),
-    };
-    setMessages([...messages, newMessage]);
-    // fetchData(newMessage);
+          options: [
+            { key: 1, text: "5-7세 어린이" },
+            { key: 2, text: "8-13세 초등학생" },
+          ],
+        },
+      ]);
+    } else if (
+      inputText.text == "5-7세 어린이" ||
+      inputText.text == "8-13세 초등학생"
+    ) {
+      setMessages([
+        ...messages,
+        inputText,
+        {
+          user: 1,
+          text: "아이에게 가장 잘 어울리는 키워드는 무엇인가요?",
+          isSent: false,
+          date: getCurrentTime(),
+        },
+        {
+          // key: messages.length + 1,
+          user: 1,
+          text: "",
+          isSent: false,
+          date: getCurrentTime(),
+          isQuickReply: true,
+
+          options: [
+            { key: 1, text: "뛰는 걸 좋아하는" },
+            { key: 2, text: "색칠이 재미있는" },
+            { key: 3, text: "빵을 만들고 싶어하는" },
+            { key: 4, text: "컨셉이 독특한" },
+            { key: 5, text: "숲속이 편안한" },
+            { key: 6, text: "물놀이가 좋은" },
+          ],
+        },
+      ]);
+    } else if (inputText.text == "컨셉이 독특한") {
+      setMessages([
+        ...messages,
+        {
+          // key: messages.length + 1,
+          user: 1,
+          text: "사용자에게 어울리는 시설들이예요!",
+          isSent: false,
+          date: getCurrentTime(),
+        },
+        {
+          // key: messages.length + 1,
+          user: 1,
+          text: "",
+          isSent: false,
+          date: getCurrentTime(),
+          isPlaceImage: true,
+          places: [
+            {
+              image: require("../assets/dummy/롤리홀리.png"),
+              name: "롤리홀리",
+              location: "",
+              runningtime: "",
+              parking: "",
+              tel: "",
+            },
+            {
+              image: require("../assets/dummy/카페팜스프링스.png"),
+              name: "카페팜스프링",
+              location: "",
+              runningtime: "",
+              parking: "",
+              tel: "",
+            },
+            {
+              image: require("../assets/dummy/쿠방플러스.png"),
+              name: "쿠방플러스",
+              location: "",
+              runningtime: "",
+              parking: "",
+              tel: "",
+            },
+            {
+              image: require("../assets/dummy/튀튀쿠키.png"),
+              name: "튀튀쿠키",
+              location: "",
+              runningtime: "",
+              parking: "",
+              tel: "",
+            },
+          ],
+        },
+      ]);
+    } else if (inputText.text == "채팅 내용 초기화") {
+      setMessages([
+        {
+          // key: messages.length + 1,
+          user: 1,
+          text: "포키즈에 오신것을 환영합니다!",
+          isSent: false,
+          date: getCurrentTime(),
+        },
+      ]);
+    } else if (inputText.text == "근처 카페 확인") {
+    } else if (inputText.text == "근처 주차장") {
+    }
   };
 
   const handleScrollPosChange = () => {
@@ -239,7 +350,7 @@ const Chat = () => {
           />
 
           <Pressable
-            onPress={sendMessage}
+            onPress={isMessageAvail}
             style={{
               padding: 10,
               backgroundColor: palette.lightPrimary,

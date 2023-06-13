@@ -7,7 +7,7 @@ import Chat from "../screens/Chat";
 import Trend from "../screens/Trend";
 import Place from "../screens/Place";
 import Calendar from "../screens/Calendar";
-
+import GuChoice from "../screens/GuChoice";
 //👇🏻 React Navigation configurations
 import { NavigationContainer } from "@react-navigation/native";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
@@ -16,39 +16,43 @@ import palette from "../utils/color";
 import { Ionicons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
+import Start from "../screens/Start";
 
 const Tab = createMaterialBottomTabNavigator();
 
-export default function Nav() {
+export default function Nav({ navigation, route }) {
+  const [isFirst, setFirst] = useState(false);
+  if (!isFirst) {
+    return (
+      <Start
+        handleFirst={() => {
+          setFirst(true);
+        }}
+      />
+    );
+  }
   return (
     <NavigationContainer>
       <Tab.Navigator
-        // screenOptions={({ route }) => ({
-        //   headerShown: false,
-        //   tabBarStyle: {
-        //     height: 90,
-        //     paddingHorizontal: 5,
-        //     paddingTop: 0,
-        //     backgroundColor: "rgba(34,36,40,1)",
-        //     position: "absolute",
-        //     borderTopWidth: 0,
-        //   },
-        // })}
+        screenOptions={({ route }) => ({
+          headerShown: false,
+          tabBarStyle: {
+            height: 90,
+            paddingHorizontal: 5,
+            paddingTop: 0,
+            backgroundColor: palette.white,
+            position: "absolute",
+            borderTopWidth: 0,
+          },
+        })}
+        shifting={true}
         initialRouteName="Chat"
         activeColor={palette.lightPrimary}
         inactiveColor={palette.darkBase}
-        style={{
+        barStyle={{
           backgroundColor: palette.lightBase,
           borderTopRightRadius: 15,
           borderTopLeftRadius: 15,
-          shadowColor: palette.black,
-          shadowOffset: {
-            width: 0,
-            height: 4,
-          },
-          shadowOpacity: 0.25,
-          shadowRadius: 10,
-          elevation: 5,
         }}
       >
         <Tab.Screen
