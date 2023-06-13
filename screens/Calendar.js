@@ -18,6 +18,7 @@ import EventBlock from "../component/EventBlock";
 import palette from "../utils/color.js";
 import { Octicons } from "@expo/vector-icons";
 
+import axios from "axios";
 /**
  *
  * @param {} param
@@ -27,50 +28,51 @@ import { Octicons } from "@expo/vector-icons";
 const Calendar = ({ route, navigation }) => {
   // dummy Text
   // setEvent fetch함
-  const [events, setEvent] = useState([
-    {
-      image: require("../assets/dummy_image_place.png"),
-      name: "dummy event",
-      date: "23/05/23",
-      url: "http://naver.com/",
-    },
-    {
-      image: require("../assets/dummy_image_place.png"),
-      name: "dummy event",
-      date: "23/05/23",
-      url: "http://naver.com/",
-    },
-    {
-      image: require("../assets/dummy_image_place.png"),
-      name: "dummy event",
-      date: "23/05/23",
-      url: "http://naver.com/",
-    },
-    {
-      image: require("../assets/dummy_image_place.png"),
-      name: "dummy event",
-      date: "23/05/23",
-      url: "http://naver.com/",
-    },
-    {
-      image: require("../assets/dummy_image_place.png"),
-      name: "dummy event",
-      date: "23/05/23",
-      url: "http://naver.com/",
-    },
-  ]);
+  const [events, setEvent] = useState([]);
   const [selectedDate, setSelectedDate] = useState(null);
   const [filteredData, setFilteredData] = useState([]); // 조건에 맞는 정보를 담을 상태
+  const fetchData = async (selectedDate) => {
+    //   try {
+    //     const response = await axios.get(
+    //       "http://3.34.136.233:5000/calendar/event"
+    //     );
+    //     console.log(response.data);
+    //     // 요청이 성공하면 서버 응답 데이터를 콘솔에 출력합니다.
+    //   } catch (error) {
+    //     console.error(error);
+    //     // 요청이 실패하면 에러를 콘솔에 출력합니다.
+    //   }
+    // };
+
+    axios
+      .get("http://3.34.136.233:5000/calendar/event/date", {
+        data: { startDate: "2023.12.5 0:00" },
+      })
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        // 에러 처리 로직을 작성합니다.
+        console.error(error);
+      });
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
+  // useEffect(() => {
+  //   // fetchData();
+  //   filterData();
+  // }, [selectedDate]);
 
   const onDateChange = (date) => {
-    console.log(date); // form '2023-05-18T03:00:00.000Z'
-
-    setSelectedDate(date);
+    const dateObj = new Date(date);
+    const year = dateObj.getFullYear();
+    const month = String(dateObj.getMonth() + 1).padStart(2, "0");
+    const day = String(dateObj.getDate()).padStart(2, "0");
+    const formattedDateString = `${year}.${month}.${day} 0:00`;
+    setSelectedDate(formattedDateString);
+    // fetchData(selectedDate);
   };
-
-  useEffect(() => {
-    filterData();
-  }, [selectedDate]);
 
   const filterData = () => {
     const filtered = events.filter((item) => {
@@ -124,9 +126,15 @@ const Calendar = ({ route, navigation }) => {
         }}
       >
         <View style={{ alignItems: "center", justifyContent: "center" }}>
-          {events.map((event, index) => (
-            <EventBlock key={index} event={event} />
-          ))}
+          {events ? (
+            <View>
+              <Text> 해당 요일에 행사하는 이벤트가 없습니다.</Text>
+            </View>
+          ) : (
+            events.map((event, index) => (
+              <EventBlock key={index} event={event} />
+            ))
+          )}
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -135,7 +143,7 @@ const Calendar = ({ route, navigation }) => {
 
 const styles = StyleSheet.create({
   mainContainer: {
-    backgroundColor: palette.lightBase,
+    backgroundColor: palette.white,
     borderBottomRightRadius: 10,
     borderBottomLeftRadius: 10,
   },
