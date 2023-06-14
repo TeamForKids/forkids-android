@@ -18,17 +18,18 @@ const PlaceModal = ({ info, onModalPress }) => {
     <Modal transparent={true}>
       <View style={styles.centerdView}>
         <View style={styles.modalFrame}>
+          <View style={styles.closeView}>
+            <Pressable onPress={onModalPress}>
+              <Text style={styles.button}>
+                <AntDesign name="close" size={30} color={palette.black} />{" "}
+              </Text>
+            </Pressable>
+          </View>
           <Text style={styles.modalName}>{name}</Text>
-          <Text style={styles.modalInfo}>{info.address}</Text>
-          <Text style={styles.modalInfo}>{info.openingHour}</Text>
-          <Text style={styles.modalInfo}>{info.parking}</Text>
-          <Text style={styles.modalInfo}>{info.telephone}</Text>
-
-          <Pressable onPress={onModalPress}>
-            <Text style={styles.button}>
-              <AntDesign name="close" size={24} color={palette.black} />{" "}
-            </Text>
-          </Pressable>
+          <Text style={styles.modalInfo}>주소 : {info.address}</Text>
+          <Text style={styles.modalInfo}>운영 시간 : {info.openingHour}</Text>
+          {/* <Text style={styles.modalInfo}>주차 정보 : {info.parking}</Text> */}
+          <Text style={styles.modalInfo}>Tel : {info.telephone}</Text>
         </View>
       </View>
     </Modal>
@@ -42,6 +43,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 22,
     padding: 10,
+  },
+  closeView: {
+    margin: 5,
+    padding: 10,
+    position: "absolute",
+    top: 0,
+    right: 0,
   },
   modalFrame: {
     width: "100%",

@@ -32,7 +32,7 @@ const PlaceBubble = ({ place }) => {
   return (
     <View>
       {isModalVisible && (
-        <PlaceModal place={place} onModalPress={handleModalVisible} />
+        <PlaceModal info={place} onModalPress={handleModalVisible} />
       )}
       <Pressable style={styles.placePressable} onPress={handleModalVisible}>
         <ImageBackground
@@ -79,10 +79,12 @@ const styles = StyleSheet.create({
   },
   placesText: {
     color: palette.white,
-    fontFamily: "Poppins_regular",
+    fontFamily: "Poppins_semibold",
     fontSize: 16,
-    bottom: 3,
-    left: 3,
+    padding: 4,
+    textShadowColor: palette.black, // 그림자 색상
+    textShadowOffset: { width: 0, height: 0 }, // 그림자 위치
+    textShadowRadius: 20, // 그림자 크기
   },
 });
 

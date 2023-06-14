@@ -69,7 +69,7 @@ const TrendBlock = ({ id, place }) => {
   return (
     <View>
       {isModalVisible && (
-        <PlaceModal info={info} onModalPress={handleModalVisible} />
+        <PlaceModal info={place} onModalPress={handleModalVisible} />
       )}
       <Pressable
         onPress={handleModalVisible}
@@ -122,6 +122,9 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginHorizontal: 10,
     marginVertical: 8,
+    textShadowColor: palette.black, // 그림자 색상
+    textShadowOffset: { width: 0, height: 0 }, // 그림자 위치
+    textShadowRadius: 20, // 그림자 크기
   },
 });
 

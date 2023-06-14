@@ -13,10 +13,14 @@ import QuickReplyContainer from "../Container/QuickReplyContainer";
 import PlaceContainer from "../Container/PlaceContainer.js";
 import { Pressable } from "react-native";
 import Nav from "../BottomTab/Nav.js";
-import { useNavigation } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
 /** 첫 시작화면입니다. Entry와 Tutorials를 포함합니다.*/
-
+const Stack = createStackNavigator();
 const Start = ({ handleFirst }) => {
+  const handleNavigate = () => {
+    navigation.navigate("Nav"); // BottomTabNav로 이동합니다.
+  };
+
   const places = [
     {
       name: "똑똑블럭 이마트 목동점",
@@ -29,145 +33,146 @@ const Start = ({ handleFirst }) => {
   ];
   return (
     // <View>
-    <Swiper>
-      <View style={styles.background}>
-        <Image
-          style={styles.ellipsePos1}
-          resizeMode="cover"
-          source={require("../assets/ellipse-1.png")}
-        />
-        <Image
-          style={styles.ellipsePos2}
-          resizeMode="cover"
-          source={require("../assets/ellipse-4.png")}
-        />
+    <Stack.Navigator>
+      <Swiper>
+        <View style={styles.background}>
+          <Image
+            style={styles.ellipsePos1}
+            resizeMode="cover"
+            source={require("../assets/ellipse-1.png")}
+          />
+          <Image
+            style={styles.ellipsePos2}
+            resizeMode="cover"
+            source={require("../assets/ellipse-4.png")}
+          />
 
-        <Image
-          style={styles.ellipsePos3}
-          resizeMode="cover"
-          source={require("../assets/ellipse-2.png")}
-        />
-        <Image
-          style={styles.ellipsePos4}
-          resizeMode="cover"
-          source={require("../assets/ellipse-3.png")}
-        />
-        <Image
-          style={styles.vectorIcon}
-          resizeMode="cover"
-          source={require("../assets/vector-1.png")}
-        />
-        <View style={styles.messagestyle}>
-          <MessageBubble
-            text={"아이의 연령대를 선택해주세요."}
-            isSent={false}
+          <Image
+            style={styles.ellipsePos3}
+            resizeMode="cover"
+            source={require("../assets/ellipse-2.png")}
           />
-          <QuickReplyContainer
-            options={[
-              { key: 1, text: "5-7세 어린이" },
-              { key: 2, text: "8-13세 초등학생" },
-            ]}
-            onOptionPress={() => {}}
+          <Image
+            style={styles.ellipsePos4}
+            resizeMode="cover"
+            source={require("../assets/ellipse-3.png")}
           />
-          <MessageBubble text={"5-7세 어린이"} isSent={true} />
-          <MessageBubble
-            text={"아이와 가장 맞는 키워드를 선택해주세요."}
-            isSent={false}
+          <Image
+            style={styles.vectorIcon}
+            resizeMode="cover"
+            source={require("../assets/vector-1.png")}
           />
-          <QuickReplyContainer
-            options={[
-              { key: 1, text: "책을 좋아하는" },
-              { key: 2, text: "운동을 좋아하는" },
-              { key: 3, text: "그림을 그리고 싶은" },
-              { key: 4, text: "숲을 좋아하는" },
-              { key: 5, text: "만들기가 재미있는" },
-            ]}
-            onOptionPress={() => {}}
-          />
-          <MessageBubble text={"운동을 좋아하는"} isSent={true} />
-        </View>
-        <Text style={styles.mainText}>
-          {`맞춤 코멘트 선택으로 
+          <View style={styles.messagestyle}>
+            <MessageBubble
+              text={"아이의 연령대를 선택해주세요."}
+              isSent={false}
+            />
+            <QuickReplyContainer
+              options={[
+                { key: 1, text: "5-7세 어린이" },
+                { key: 2, text: "8-13세 초등학생" },
+              ]}
+              onOptionPress={() => {}}
+            />
+            <MessageBubble text={"5-7세 어린이"} isSent={true} />
+            <MessageBubble
+              text={"아이와 가장 맞는 키워드를 선택해주세요."}
+              isSent={false}
+            />
+            <QuickReplyContainer
+              options={[
+                { key: 1, text: "책을 좋아하는" },
+                { key: 2, text: "운동을 좋아하는" },
+                { key: 3, text: "그림을 그리고 싶은" },
+                { key: 4, text: "숲을 좋아하는" },
+                { key: 5, text: "만들기가 재미있는" },
+              ]}
+              onOptionPress={() => {}}
+            />
+            <MessageBubble text={"운동을 좋아하는"} isSent={true} />
+          </View>
+          <Text style={styles.mainText}>
+            {`맞춤 코멘트 선택으로 
 아이에게 딱 맞는 장소찾기`}
-        </Text>
-        <View style={styles.mainTextView} />
-      </View>
-      <View style={styles.background}>
-        <Image
-          style={styles.ellipsePos1}
-          resizeMode="cover"
-          source={require("../assets/ellipse-1.png")}
-        />
-        <Image
-          style={styles.ellipsePos2}
-          resizeMode="cover"
-          source={require("../assets/ellipse-4.png")}
-        />
-
-        <Image
-          style={styles.ellipsePos3}
-          resizeMode="cover"
-          source={require("../assets/ellipse-2.png")}
-        />
-        <Image
-          style={styles.ellipsePos4}
-          resizeMode="cover"
-          source={require("../assets/ellipse-3.png")}
-        />
-        <Image
-          style={styles.vectorIcon}
-          resizeMode="cover"
-          source={require("../assets/vector-1.png")}
-        />
-        <View style={styles.messagestyle}>
-          <MessageBubble text={"목동 실내 놀이 공간"} isSent={true} />
-          <MessageBubble
-            text={"목동의 인기 실내 놀이 시설입니다."}
-            isSent={false}
-          />
-          <PlaceContainer places={places}></PlaceContainer>
+          </Text>
+          <View style={styles.mainTextView} />
         </View>
-        <Text style={styles.mainText}>
-          {`간단한 대화를 통해 
+        <View style={styles.background}>
+          <Image
+            style={styles.ellipsePos1}
+            resizeMode="cover"
+            source={require("../assets/ellipse-1.png")}
+          />
+          <Image
+            style={styles.ellipsePos2}
+            resizeMode="cover"
+            source={require("../assets/ellipse-4.png")}
+          />
+
+          <Image
+            style={styles.ellipsePos3}
+            resizeMode="cover"
+            source={require("../assets/ellipse-2.png")}
+          />
+          <Image
+            style={styles.ellipsePos4}
+            resizeMode="cover"
+            source={require("../assets/ellipse-3.png")}
+          />
+          <Image
+            style={styles.vectorIcon}
+            resizeMode="cover"
+            source={require("../assets/vector-1.png")}
+          />
+          <View style={styles.messagestyle}>
+            <MessageBubble text={"목동 실내 놀이 공간"} isSent={true} />
+            <MessageBubble
+              text={"목동의 인기 실내 놀이 시설입니다."}
+              isSent={false}
+            />
+            <PlaceContainer places={places}></PlaceContainer>
+          </View>
+          <Text style={styles.mainText}>
+            {`간단한 대화를 통해 
 원하는 시설 정보 확인하기`}
-        </Text>
-        <View style={styles.mainTextView} />
-      </View>
+          </Text>
+          <View style={styles.mainTextView} />
+        </View>
 
-      <View style={styles.background}>
-        <Image
-          style={styles.vectorIconsub1}
-          resizeMode="cover"
-          source={require("../assets/vector-1.png")}
-        />
-        <Image
-          style={styles.vectorIconsub2}
-          resizeMode="cover"
-          source={require("../assets/vector-3.png")}
-        />
-        <Image
-          style={styles.vectorIconsub3}
-          resizeMode="cover"
-          source={require("../assets/vector-2.png")}
-        />
-        <Image
-          style={styles.vectorIconsub4}
-          resizeMode="cover"
-          source={require("../assets/vector-4.png")}
-        />
+        <View style={styles.background}>
+          <Image
+            style={styles.vectorIconsub1}
+            resizeMode="cover"
+            source={require("../assets/vector-1.png")}
+          />
+          <Image
+            style={styles.vectorIconsub2}
+            resizeMode="cover"
+            source={require("../assets/vector-3.png")}
+          />
+          <Image
+            style={styles.vectorIconsub3}
+            resizeMode="cover"
+            source={require("../assets/vector-2.png")}
+          />
+          <Image
+            style={styles.vectorIconsub4}
+            resizeMode="cover"
+            source={require("../assets/vector-4.png")}
+          />
 
-        <Text style={styles.mainTextsub}>
-          {`채팅 전송을 통해 아이를 위한 
+          <Text style={styles.mainTextsub}>
+            {`채팅 전송을 통해 아이를 위한 
 최적의 선택을 
 쉽게 얻어보세요`}
-        </Text>
-        <Pressable onPress={handleFirst} style={styles.startPressable}>
-          <Text style={styles.startText}>지금 시작하기</Text>
-        </Pressable>
-        <View style={styles.mainTextView} />
-      </View>
-    </Swiper>
-    // </View>
+          </Text>
+          <Pressable onPress={handleNavigate} style={styles.startPressable}>
+            <Text style={styles.startText}>지금 시작하기</Text>
+          </Pressable>
+          <View style={styles.mainTextView} />
+        </View>
+      </Swiper>
+    </Stack.Navigator>
   );
 };
 
@@ -273,7 +278,7 @@ const styles = StyleSheet.create({
     shadowRadius: 3,
   },
   startText: {
-    fontSize: 30,
+    fontSize: 25,
     paddingHorizontal: 15,
     paddingVertical: 3,
     margin: 3,
